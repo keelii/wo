@@ -1,0 +1,23 @@
+{
+  "name": "wow",
+  "version": "0.0.0",
+  "scripts": {
+    "start": "node ./bin/index start",
+    "build": "node ./bin/index build",
+    "release": "node ./bin/index release",
+    "deploy": "node ./bin/index deploy",
+    "clear": "node ./bin/index clear"
+  },
+  "dependencies": {
+    "chokidar": "^1.4.2",
+    "is-glob": "^2.0.1",
+    "lodash": "^4.2.1",
+    "map-stream": "0.0.6",
+    "minimist": "^1.2.0",
+    "node-sass": "^3.4.2",
+    "nunjucks": "^2.3.0",
+    "uglify-js": "^2.6.1",
+    "vinyl-fs": "^2.3.1",
+    "glob": "^7.0.0"
+  }
+}

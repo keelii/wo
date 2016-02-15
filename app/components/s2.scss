@@ -1,0 +1,16 @@
+#mod {
+    ul {
+        padding: 0 10px;
+    }
+    li {
+        float: left;
+    }
+    p {
+        background: url(i/test.png);
+        background: url(../outer.png);
+        background: url(//abspath//test.png);
+        background: url(http://test.png);
+        background: url("i/test.png");
+    }
+
+}
