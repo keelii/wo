@@ -1,5 +1,5 @@
 {
-  "name": "wow",
+  "name": "wo",
   "version": "0.0.0",
   "scripts": {
     "start": "node ./bin/index start",
