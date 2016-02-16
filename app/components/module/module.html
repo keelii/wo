@@ -1,0 +1,12 @@
+{% import 'views/maco/default.html' as wow %}
+<div id="{{ id }}" class="mod {{ class }}">
+	<div class="mt">
+		<h2>{{ id }}</h2>
+	</div>
+	<div class="mc">
+        <p>{{ id }} => module content</p>
+
+        <h3>img lists:</h3>
+        {{ wow.imgList('img-list', 'plist', 'src', 3, 100, 61) }}
+	</div>
+</div>

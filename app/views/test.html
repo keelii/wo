@@ -1,0 +1,6 @@
+{% extends 'views/layout/layout.html' %}
+
+{% block style %}
+    {{ super() }}
+    {{ _components | source('link') }}
+{% endblock %}

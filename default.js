@@ -2,7 +2,6 @@
 const path = require('path');
 const _ = require('lodash');
 const defaults = {
-
     production: 'http://your.domain.com/cdn/path',
 
     scripts: ['app/**/*.js'],
@@ -17,13 +16,14 @@ const defaults = {
         test: '.test.html'
     },
 
-    static: ['static/**/*'],
+    assets: ['static/**/*'],
 
     dest: 'build',
 
     server: {
         dir: '.www',
-        port: 80
+        port: 80,
+        index: false
     }
 };
 
@@ -36,7 +36,7 @@ function addRuntimeVal(arg) {
         console.error('Config file not found.');
     }
 
-    let options = _.extend(defaults, config);
+    let options = _.defaultsDeep(config, defaults);
 
     options._arg = arg;
     options._cmd = arg._[0];
@@ -44,7 +44,7 @@ function addRuntimeVal(arg) {
     options._SOURCE_ROOT = path.join(options._CWD, options.source);
     options._VIEW_ROOT = path.join(options._CWD, options.view);
     options._SERVER_ROOT = path.join(path.resolve(options.server.dir));
-    options._DEST_ROOT = path.resolve(options._cmd == 'start' ? options.server.dir : options.dest);
+    options._DEST_ROOT = path.resolve(options._cmd === 'start' ? options.server.dir : options.dest);
 
     // Development
     options._isDev = /start/.test(options._cmd);

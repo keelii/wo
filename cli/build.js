@@ -10,7 +10,7 @@ const glob = require('glob');
 const isGlob = require('is-glob');
 const utils = require('../lib/utils');
 
-function getSources(input) {
+function getSources(config, input) {
     let files = [];
     let source = {
         scripts: [],
@@ -19,7 +19,9 @@ function getSources(input) {
         images: []
     };
 
-    if (isGlob(input)) {
+    if (!input) {
+        files = glob.sync(config._SOURCE_ROOT + '/**');
+    } else if (isGlob(input)) {
         files = glob.sync(input);
     } else if (utils.isDir(input)) {
         files = glob.sync(input + '/**');
@@ -52,7 +54,7 @@ function uglify(config, input) {
         }));
     }
 
-    stream.pipe(vfs.dest(config.dest));
+    stream.pipe(vfs.dest(config._DEST_ROOT));
 }
 function sass(config, input) {
     let styles = input || config.styles;
@@ -68,7 +70,7 @@ function sass(config, input) {
         }));
     }
 
-    stream.pipe(vfs.dest(config.dest));
+    stream.pipe(vfs.dest(config._DEST_ROOT));
 }
 function nunjucks(config, input) {
     let styles = input || config.templates;
@@ -80,16 +82,24 @@ function nunjucks(config, input) {
         stream.pipe(Nunjucks(config));
     // }
 
-    stream.pipe(vfs.dest(config.dest));
+    stream.pipe(vfs.dest(config._DEST_ROOT));
+}
+function copy(config, input) {
+    let images = input || config.images;
+    let stream = vfs.src(images,
+        { base: config._SOURCE_ROOT});
+        
+    stream.pipe(vfs.dest(config._DEST_ROOT));
 }
 
 function build(config) {
     const input = config._arg._[1];
 
+    // npm run build
     // npm run build app/path/to/dir
     // npm run build app/path/**/*.js
-    if (isGlob(input) || utils.isDir(input)) {
-        let s = getSources(input);
+    if (!input || isGlob(input) || utils.isDir(input)) {
+        let s = getSources(config, input);
 
         if (s.scripts.length) {
             uglify(config, s.scripts);
@@ -101,7 +111,7 @@ function build(config) {
             nunjucks(config, s.templates);
         }
         if (s.images.length) {
-            // compress(s.scripts);
+            copy(config, s.images);
         }
     } else if (utils.isFile(input))  {
         // npm run build app/path/to/file.js
@@ -112,12 +122,11 @@ function build(config) {
             sass(config, input);
         }
         if (utils.isTemplate(input)) {
-            // nunjucks();
+            nunjucks(config, input);
         }
-    }
-
-    if (isGlob(input)) {
-
+        if (utils.isImage(input)) {
+            copy(config, input);
+        }
     }
 }
 

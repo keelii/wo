@@ -1,0 +1,27 @@
+{# ----- HTML 标签快捷方法 ----- #}
+
+{% macro link(href) -%}
+    <link rel="stylesheet" href="{{ href }}" />
+{%- endmacro %}
+
+{% macro script(src) -%}
+    <script src="{{ src }}"></script>
+{%- endmacro %}
+
+{# ----- 代码片段 ----- #}
+
+{% macro imgList(id='plist', class='plist', source="data-lazy-img", length=5, width=100, height=100, text_size=30, text='Wow') -%}
+<ul id="{{ id }}" class="{{ class }}">
+    {% for i in range(0, length) %}
+    <li class="fore{{ i }}">
+        <a href="http://jd.com/" target="_blank">
+            <img data-img="1" {{ source }}="https://placeholdit.imgix.net/~text?txtsize={{ text_size }}&txt={{ text }}&w={{ width }}&h={{ height }}" width="{{ width }}" height="{{ height }}" alt=""/>
+        </a>
+    </li>
+    {% endfor %}
+</ul>
+{%- endmacro %}
+
+{% macro npm_pkg(name) -%}
+    <a target="_blank" href="//www.npmjs.com/package/{{ name }}">{{ name }}</a>
+{%- endmacro %}

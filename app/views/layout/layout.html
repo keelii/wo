@@ -1,0 +1,23 @@
+{% import 'views/maco/default.html' as wow %}
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8" />
+    <title>Wow is awsome.</title>
+
+    {% block style %}
+        {{ Tag('link', '/components/main/main.css') }}
+    {% endblock %}
+
+</head>
+<body>
+
+    {% block body %} {% endblock %}
+
+
+    {% block script %}
+        {{ Tag('script', '/components/main/main.js') }}
+    {% endblock %}
+
+</body>
+</html>

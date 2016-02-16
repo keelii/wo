@@ -18,6 +18,7 @@
     "nunjucks": "^2.3.0",
     "uglify-js": "^2.6.1",
     "vinyl-fs": "^2.3.1",
-    "glob": "^7.0.0"
+    "glob": "^7.0.0",
+    "static-http-server": "0.0.4"
   }
 }

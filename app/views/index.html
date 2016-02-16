@@ -1,0 +1,32 @@
+{% extends 'views/layout/layout.html' %}
+
+{% block style %}
+    {{ super() }}
+    {{ _components | source('link') }}
+{% endblock %}
+
+{% block script %}
+    {{ super() }}
+    {{ _components | source('script') }}
+{% endblock %}
+
+{% block body %}
+    <h1><s></s> Wow... </h1>
+    
+    <small><em> {{ name }} @ {{ version }} </em></small>
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab accusamus amet atque cum excepturi fuga inventore ipsa iste laborum nam, officiis possimus quam quas rem tempore, vitae voluptatem. Illo, repellat.</p>
+
+    <div class="icons">
+        <h2>CSS Sprite will auto generate:</h2>
+        <i class="sprite-1"></i>
+        <i class="sprite-2"></i>
+        <i class="sprite-3"></i>
+    </div>
+
+    {% component 'module', { id:'mod1', class: 'm2', foo: 1, bar: 2 } %}
+    {% component 'module' %}
+    {% component 'sidebar', { foo: 1, bar: 2 } %}
+    {% component 'footer' %}
+
+
+{% endblock %}
