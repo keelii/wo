@@ -4,6 +4,7 @@ const Uglify = require('../lib/uglify');
 const Sass = require('../lib/sass');
 const Nunjucks = require('../lib/nunjucks');
 const Component = require('../lib/component');
+const Sprite = require('../lib/sprite');
 const rebasePath = require('../lib/rebasePath');
 
 const glob = require('glob');
@@ -88,16 +89,19 @@ function copy(config, input) {
     let images = input || config.images;
     let stream = vfs.src(images,
         { base: config._SOURCE_ROOT});
-        
+
     stream.pipe(vfs.dest(config._DEST_ROOT));
 }
 
 function build(config) {
     const input = config._arg._[1];
 
+     Sprite(config);
+
     // npm run build
     // npm run build app/path/to/dir
     // npm run build app/path/**/*.js
+
     if (!input || isGlob(input) || utils.isDir(input)) {
         let s = getSources(config, input);
 

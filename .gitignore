@@ -2,7 +2,7 @@
 .idea
 .vscode
 npm-debug.log
+node_modules
 typings
 build
-node_modules
-
+.www

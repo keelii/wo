@@ -1,4 +1,4 @@
-@import "_sprite.scss";
+@import "__sprite.scss";
 
 h1 {
     border-bottom: 1px solid #333;
@@ -22,7 +22,7 @@ ul {
     i {
         display: inline-block;
     }
-    @include sprites($spritesheet-sprites);
+    // @include sprites($spritesheet-sprites);
 }
 h1 s {
     display:inline-block;
