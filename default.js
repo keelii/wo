@@ -7,6 +7,7 @@ const defaults = {
     scripts: ['app/**/*.js'],
     styles: ['app/**/*.scss'],
     images: ['app/**/i/*.+(|jpg|png|gif)'],
+    templates: ['app/views/*.html'],
     sprites: {
         cssName: '__sprite.scss',
         imgName: 'i/__sprite.png',
@@ -23,8 +24,10 @@ const defaults = {
         config: 'config.js',
         test: '.test.html'
     },
+    templateRefs:  ['app/components/*/*.html', 'app/views/*/*.html'],
 
     assets: ['static/**/*'],
+    watchIgnore: /\/maco\/|\/layout\/|config\.js|node_modules/,
 
     dest: 'build',
 
@@ -32,6 +35,15 @@ const defaults = {
         dir: '.www',
         port: 80,
         index: false
+    },
+
+    deploy: {
+        host: '127.0.0.1',
+        user: 'ftpuser',
+        password: 'ftppass',
+        parallel: 10,
+        src: 'build/**',
+        dest: './'
     }
 };
 

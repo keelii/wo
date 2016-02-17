@@ -13,12 +13,12 @@ if (cmd) {
     const settings = require(process.cwd() + '/default')(argv);
 
     if (cmdMap[cmd]) {
-        try {
+        // try {
             require(`../cli/${cmdMap[cmd]}`)(settings);
-        } catch (error) {
-            console.log('Module [%s] loaded error.', cmdMap[cmd]);
-            console.dir(error);
-        }
+        // } catch (error) {
+        //     console.log('Module [%s] loaded error.', cmdMap[cmd]);
+        //     console.error(error);
+        // }
     } else {
         console.log('Command [%s] not found.', cmd);
     }
