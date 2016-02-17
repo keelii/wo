@@ -4,11 +4,13 @@
   "scripts": {
     "start": "node ./bin/index start",
     "build": "node ./bin/index build",
+    "build:s": "node ./bin/index build --sprite",
     "release": "node ./bin/index release",
     "deploy": "node ./bin/index deploy",
     "clear": "node ./bin/index clear"
   },
   "dependencies": {
+    "async": "^1.5.2",
     "chokidar": "^1.4.2",
     "glob": "^7.0.0",
     "is-glob": "^2.0.1",

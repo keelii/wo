@@ -7,6 +7,14 @@ const defaults = {
     scripts: ['app/**/*.js'],
     styles: ['app/**/*.scss'],
     images: ['app/**/i/*.+(|jpg|png|gif)'],
+    sprites: {
+        cssName: '__sprite.scss',
+        imgName: 'i/__sprite.png',
+        items: [
+            'app/components/main/**/sprite-*.png',
+            'app/components/footer/**/sprite-*.png'
+        ]
+    },
 
     source: 'app',
     view: 'views',

@@ -13,12 +13,10 @@ const utils = require('../lib/utils');
 
 function getSources(config, input) {
     let files = [];
-    let source = {
-        scripts: [],
-        styles: [],
-        templates: [],
-        images: []
-    };
+    let scripts = [];
+    let styles = [];
+    let templates = [];
+    let images = [];
 
     if (!input) {
         files = glob.sync(config._SOURCE_ROOT + '/**');
@@ -27,21 +25,21 @@ function getSources(config, input) {
     } else if (utils.isDir(input)) {
         files = glob.sync(input + '/**');
     } else {
-        return source;
+        return null;
     }
 
     files.forEach((f) => {
         if (utils.isJS(f)) {
-            source.scripts.push(f);
+            scripts.push(f);
         } else if (utils.isSass(f)) {
-            source.styles.push(f);
+            styles.push(f);
         } else if (utils.isTemplate(f)) {
-            source.templates.push(f);
+            templates.push(f);
         }  else if (utils.isImage(f)) {
-            source.images.push(f);
+            images.push(f);
         }
     });
-    return source;
+    return { scripts, styles, templates, images };
 }
 
 function uglify(config, input) {
@@ -50,9 +48,7 @@ function uglify(config, input) {
         { base: config._SOURCE_ROOT});
 
     if (config._isPrd) {
-        stream.pipe(Uglify({
-            exclude: 'define'
-        }));
+        stream.pipe(Uglify({}));
     }
 
     stream.pipe(vfs.dest(config._DEST_ROOT));
@@ -93,15 +89,10 @@ function copy(config, input) {
     stream.pipe(vfs.dest(config._DEST_ROOT));
 }
 
-function build(config) {
-    const input = config._arg._[1];
-
-     Sprite(config);
-
+function build(config, input) {
     // npm run build
     // npm run build app/path/to/dir
     // npm run build app/path/**/*.js
-
     if (!input || isGlob(input) || utils.isDir(input)) {
         let s = getSources(config, input);
 
@@ -134,4 +125,15 @@ function build(config) {
     }
 }
 
-module.exports = build;
+module.exports = function (config) {
+    const input = config._arg._[1];
+
+    // npm run build:s => build --sprite
+    if (config._arg.sprite) {
+        Sprite(config, function () {
+            build(config, input);
+        });
+    } else {
+        build(config, input);
+    }
+};
