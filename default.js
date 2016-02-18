@@ -4,7 +4,7 @@ const _ = require('lodash');
 const defaults = {
     production: 'http://your.domain.com/cdn/path',
 
-    scripts: ['app/**/*.js'],
+    scripts: ['app/**/*.js', '!app/components/*/config.js'],
     styles: ['app/**/*.scss'],
     images: ['app/**/i/*.+(|jpg|png|gif)'],
     templates: ['app/views/*.html'],
@@ -27,6 +27,7 @@ const defaults = {
     templateRefs:  ['app/components/*/*.html', 'app/views/*/*.html'],
 
     assets: ['static/**/*'],
+    globalIgnore: ['!app/components/*/config.js'],
     watchIgnore: /\/maco\/|\/layout\/|config\.js|node_modules/,
 
     dest: 'build',
