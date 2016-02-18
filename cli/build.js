@@ -42,7 +42,6 @@ function getSources(input, config) {
     }
 
     files.forEach(f => sources[utils.getProcessor(f)].push(f));
-    console.log(sources);
     return sources;
 }
 
@@ -53,13 +52,11 @@ Processor.uglify = function (config, input, callback) {
     let stream = vfs.src(scripts,
         { base: config._SOURCE_ROOT});
 
-    //if (config._isPrd) {
-        stream.pipe(Uglify({
-            mangle: {
-                except: ['define', 'require', 'module', 'exports']
-            }
-        }));
-    //}
+    stream.pipe(Uglify({
+        mangle: {
+            except: ['define', 'require', 'module', 'exports']
+        }
+    }));
 
     stream.pipe(vfs.dest(config._DEST_ROOT));
     stream.on('end', callback);
@@ -88,10 +85,8 @@ Processor.nunjucks = function (config, input, callback) {
     let stream = vfs.src(templates,
         { base: config._SOURCE_ROOT});
 
-    // if (config._isDev) {
-        stream.pipe(Component(config));
-        stream.pipe(Nunjucks(config));
-    // }
+    stream.pipe(Component(config));
+    stream.pipe(Nunjucks(config));
 
     stream.pipe(vfs.dest(config._DEST_ROOT));
     stream.on('end', callback);
@@ -114,14 +109,23 @@ function build(config, input, callback) {
         let s = getSources(input, config);
         let tasks = [];
 
-        for (let key in s) {
-            //console.log('KEY: %s | VAL: %s', key, s[key]);
-            if (s[key].length) {
-                tasks.push(function(cb) {
-                    Processor[key](config, s[key], cb);
-                });
-            }
+        // 开发环境复制脚本、图片、测试到本地服务器
+        if (config._isDev) {
+            s.copy = _.concat(s.copy, s.uglify, config.assets);
         }
+        if (s.uglify.length && config._isPrd) {
+            tasks.push(cb => Processor.uglify(config, s.uglify, cb));
+        }
+        if (s.sass.length) {
+            tasks.push(cb => Processor.sass(config, s.sass, cb));
+        }
+        if (s.nunjucks.length && config.isDev) {
+            tasks.push(cb => Processor.nunjucks(config, s.nunjucks, cb));
+        }
+        if (s.copy.length) {
+            tasks.push(cb => Processor.copy(config, s.copy, cb));
+        }
+
         async.series(tasks, callback);
     } else if (utils.isFile(input))  {
         // npm run build app/path/to/file.js

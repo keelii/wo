@@ -1,9 +1,13 @@
 'use strict';
 const vfs = require('vinyl-fs');
 const ftp   = require('vinyl-ftp');
+const build   = require('./build');
+
 const _ = require('lodash');
 
-module.exports = function(config) {
+function deploy(config, callback) {
+    callback = callback || function() {};
+
     let ftpConfig = _.defaults({
         log: function (type, file) {
             if (/UP/.test(type)) {
@@ -19,5 +23,18 @@ module.exports = function(config) {
         buffer: false
     })
     .pipe(conn.newer(ftpConfig.dest))
-    .pipe(conn.dest(ftpConfig.dest));
+    .pipe(conn.dest(ftpConfig.dest))
+    .on('end', callback);
+}
+
+module.exports = function(config, input) {
+    input = input || config._arg._[1];
+
+    console.log('Building sources\n...');
+    build(config, input, function() {
+        console.log('Build done. deploying to server\n...');
+        deploy(config, function() {
+            console.log('Deploy done.');
+        });
+    });
 };

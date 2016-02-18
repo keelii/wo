@@ -4,9 +4,9 @@ const _ = require('lodash');
 const defaults = {
     production: 'http://your.domain.com/cdn/path',
 
-    scripts: ['app/**/*.js', '!app/components/*/config.js'],
-    styles: ['app/**/*.scss'],
-    images: ['app/**/i/*.+(|jpg|png|gif)'],
+    scripts: ['app/components/**/*.js', '!app/components/*/config.js'],
+    styles: ['app/components/**/*.scss'],
+    images: ['app/components/**/i/*.+(|jpg|png|gif)'],
     templates: ['app/views/*.html'],
     sprites: {
         cssName: '__sprite.scss',
@@ -26,7 +26,7 @@ const defaults = {
     },
     templateRefs:  ['app/components/*/*.html', 'app/views/*/*.html'],
 
-    assets: ['static/**/*'],
+    assets: ['app/tests/**'],
     globalIgnore: ['!app/components/*/config.js'],
     watchIgnore: /\/maco\/|\/layout\/|config\.js|node_modules/,
 
@@ -42,7 +42,7 @@ const defaults = {
         host: '127.0.0.1',
         user: 'ftpuser',
         password: 'ftppass',
-        parallel: 10,
+        parallel: 5,
         src: 'build/**',
         dest: './'
     }
