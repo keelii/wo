@@ -1,22 +1,25 @@
 {
-  "name": "wo",
+  "name": "wooo",
   "version": "0.0.0",
+  "author": "keelii <keeliizhou@gmail.com>",
+  "description": "FE Build tool with easy cli.",
+  "license": "MIT",
+  "keywords": [
+    "build",
+    "tools"
+  ],
   "main": "index.js",
   "bin": {
     "wo": "index.js"
   },
   "scripts": {
-    "test": "./node_modules/.bin/mocha test/main.js",
-    "start": "node ./index start",
-    "build": "node ./index build --version=1.1.1",
-    "build:sprite": "node ./index build --sprite",
-    "build:uglify": "node ./index build --uglify",
-    "build:sass": "node ./index build --sass",
-    "build:nunjucks": "node ./index build --nunjucks",
-    "release": "node ./index release",
-    "deploy": "node ./index deploy",
-    "clear": "node ./index clear"
+    "test": "./node_modules/.bin/mocha test/main.js"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/keelii/wo.git"
+  },
+  "bugs": "https://github.com/keelii/wo/issues",
   "dependencies": {
     "async": "^1.5.2",
     "chokidar": "^1.4.2",
