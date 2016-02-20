@@ -1,28 +1,41 @@
 {
   "name": "wo",
   "version": "0.0.0",
+  "main": "index.js",
+  "bin": {
+    "wo": "index.js"
+  },
   "scripts": {
-    "start": "node ./bin/index start",
-    "build": "node ./bin/index build",
-    "build:s": "node ./bin/index build --sprite",
-    "release": "node ./bin/index release",
-    "deploy": "node ./bin/index deploy",
-    "clear": "node ./bin/index clear"
+    "test": "./node_modules/.bin/mocha test/main.js",
+    "start": "node ./index start",
+    "build": "node ./index build --version=1.1.1",
+    "build:sprite": "node ./index build --sprite",
+    "build:uglify": "node ./index build --uglify",
+    "build:sass": "node ./index build --sass",
+    "build:nunjucks": "node ./index build --nunjucks",
+    "release": "node ./index release",
+    "deploy": "node ./index deploy",
+    "clear": "node ./index clear"
   },
   "dependencies": {
     "async": "^1.5.2",
     "chokidar": "^1.4.2",
     "globby": "^4.0.0",
+    "imagemin-pngquant": "^4.2.2",
     "is-glob": "^2.0.1",
     "lodash": "^4.2.1",
     "map-stream": "0.0.6",
     "minimist": "^1.2.0",
     "node-sass": "^3.4.2",
     "nunjucks": "^2.3.0",
+    "rimraf": "^2.5.2",
     "spritesmith": "^3.1.0",
     "static-http-server": "0.0.4",
     "uglify-js": "^2.6.1",
     "vinyl-fs": "^2.3.1",
     "vinyl-ftp": "^0.4.5"
+  },
+  "devDependencies": {
+    "mocha": "^2.4.5"
   }
 }

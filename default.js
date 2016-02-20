@@ -1,10 +1,22 @@
 'use strict';
 const path = require('path');
+const cmdMap = require('./lib/utils').cmdMap;
 const _ = require('lodash');
-const defaults = {
-    production: 'http://your.domain.com/cdn/path',
 
-    scripts: ['app/components/**/*.js', '!app/components/*/config.js'],
+const defaults = {
+    /**
+     * wo 中有两种路径
+     * 1. 线上文件夹路径
+     *    build/name/version/RELATIVE_DIR
+     * 2. 样式文件图片引用路径
+     *    production/name/version/RELATIVE_DIR
+     */
+    name: 'project_name',
+    version: '0.0.0',
+
+    production: 'http://your.domain.com/cdn-path/',
+
+    scripts: ['app/components/**/*.js'],
     styles: ['app/components/**/*.scss'],
     images: ['app/components/**/i/*.+(|jpg|png|gif)'],
     templates: ['app/views/*.html'],
@@ -26,7 +38,8 @@ const defaults = {
     },
     templateRefs:  ['app/components/*/*.html', 'app/views/*/*.html'],
 
-    assets: ['app/tests/**'],
+    tests: ['app/tests/**'],
+    assets: ['app/components/**/*.cur'],
     globalIgnore: ['!app/components/*/config.js'],
     watchIgnore: /\/maco\/|\/layout\/|config\.js|node_modules/,
 
@@ -62,15 +75,23 @@ function addRuntimeVal(arg) {
     options._arg = arg;
     options._cmd = arg._[0];
     options._CWD = process.cwd();
+    options._VERSION = arg.ver || options.version;
     options._SOURCE_ROOT = path.join(options._CWD, options.source);
     options._VIEW_ROOT = path.join(options._CWD, options.view);
     options._SERVER_ROOT = path.join(path.resolve(options.server.dir));
-    options._DEST_ROOT = path.resolve(options._cmd === 'start' ? options.server.dir : options.dest);
+
+    // project_name/version_number
+    options._PRD_PREFIX = path.join(options.name, options._VERSION);
 
     // Development
-    options._isDev = /start/.test(options._cmd);
+    options._isDev = cmdMap[options._cmd] == 'start';
     // Production
-    options._isPrd = /build|release|deploy/.test(options._cmd);
+    options._isPrd = /build|release|deploy/.test(cmdMap[options._cmd]);
+
+    options._DEST_ROOT = options._isDev
+        ? options.server.dir
+        : path.join(options.dest, options._PRD_PREFIX);
+
     // component data
     options._components = {};
 

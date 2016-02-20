@@ -7,101 +7,107 @@ const Component = require('../lib/component');
 const Sprite = require('../lib/sprite');
 const rebasePath = require('../lib/rebasePath');
 
+const rimraf = require('rimraf');
 const async = require('async');
 const globby = require('globby');
 const isGlob = require('is-glob');
-const utils = require('../lib/utils');
 const _ = require('lodash');
+const utils = require('../lib/utils');
+
+let Processor = {};
+Processor.uglify = function (config, input, callback) {
+    callback = callback || function() {};
+    let source = input || config.scripts;
+
+    vfs.src(source, { base: config._SOURCE_ROOT})
+        .pipe(Uglify({
+            mangle: {
+                except: ['define', 'require', 'module', 'exports']
+            }
+        }))
+        .pipe(vfs.dest(config._DEST_ROOT))
+        .on('end', callback);
+};
+Processor.sass = function (config, input, callback) {
+    callback = callback || function() {};
+    let source = input || config.styles;
+
+    vfs.src(source, { base: config._SOURCE_ROOT})
+        .pipe(Sass())
+        .pipe(rebasePath({
+            enabled: config._isPrd,
+            base: config._SOURCE_ROOT,
+            prefix: config.production + utils.dirToPath(config._PRD_PREFIX)
+        }))
+        .pipe(vfs.dest(config._DEST_ROOT))
+        .on('end', callback);
+};
+Processor.nunjucks = function (config, input, callback) {
+    callback = callback || function() {};
+    let source = input || config.templates;
+
+    vfs.src(source, { base: config._SOURCE_ROOT})
+        .pipe(Component(config))
+        .pipe(Nunjucks(config))
+        .pipe(vfs.dest(config._DEST_ROOT))
+        .on('end', callback);
+};
+Processor.imagemin = function (config, input, callback) {
+    callback = callback || function() {};
+    let source = input || config.images;
+    let stream = vfs.src(source,
+        { base: config._SOURCE_ROOT});
+
+    // 后期添加优化功能
+    stream.pipe(vfs.dest(config._DEST_ROOT));
+    stream.on('end', callback);
+};
+Processor.copy = function (config, input, callback) {
+    callback = callback || function() {};
+    let source = input || config.assets;
+    let stream = vfs.src(source,
+        { base: config._SOURCE_ROOT});
+
+    stream.pipe(vfs.dest(config._DEST_ROOT));
+    stream.on('end', callback);
+};
 
 function getSources(input, config) {
-    let files = [];
     let globOption = { nodir: true };
 
     let sources = {
         uglify: [],
         sass: [],
         nunjucks: [],
+        imagemin: [],
         copy: []
     };
+    let targets = null;
 
     if (!input) {
-        return {
-            uglify: config.scripts,
-            sass: config.styles,
-            nunjucks: config.templates,
-            copy: config.images
-        }
-    } else if (isGlob(input)) {
-        let target = _.concat([input], config.globalIgnore);
-        files = globby.sync(target, globOption);
-    } else if (utils.isDir(input)) {
-        let target = _.concat([input + '/**'], config.globalIgnore);
-        files = globby.sync(target, globOption);
-    } else {
-        throw new Error('Unexpected command.');
+        return  {
+            uglify  : config.scripts.concat(config.globalIgnore),
+            sass    : config.styles.concat(config.globalIgnore),
+            nunjucks: config.templates.concat(config.globalIgnore),
+            imagemin: config.images.concat(config.globalIgnore),
+            copy    : config.assets.concat(config.globalIgnore)
+        };
     }
+
+    if (isGlob(input)) {
+        targets = _.concat([input], config.globalIgnore);
+    } else if (utils.isDir(input)) {
+        targets = _.concat([input + '/**'], config.globalIgnore);
+    }
+
+    let files = globby.sync(targets, globOption);
 
     files.forEach(f => sources[utils.getProcessor(f)].push(f));
     return sources;
 }
 
-let Processor = {};
-Processor.uglify = function (config, input, callback) {
-    callback = callback || function() {};
-    let scripts = input || config.scripts;
-    let stream = vfs.src(scripts,
-        { base: config._SOURCE_ROOT});
-
-    stream.pipe(Uglify({
-        mangle: {
-            except: ['define', 'require', 'module', 'exports']
-        }
-    }));
-
-    stream.pipe(vfs.dest(config._DEST_ROOT));
-    stream.on('end', callback);
-};
-Processor.sass = function (config, input, callback) {
-    callback = callback || function() {};
-    let styles = input || config.styles;
-    let stream = vfs.src(styles,
-        { base: config._SOURCE_ROOT});
-
-    stream.pipe(Sass());
-
-    if (config._isPrd) {
-        stream.pipe(rebasePath({
-            base: config._SOURCE_ROOT,
-            prefix: config.production
-        }));
-    }
-
-    stream.pipe(vfs.dest(config._DEST_ROOT));
-    stream.on('end', callback);
-};
-Processor.nunjucks = function (config, input, callback) {
-    callback = callback || function() {};
-    let templates = input || config.templates;
-    let stream = vfs.src(templates,
-        { base: config._SOURCE_ROOT});
-
-    stream.pipe(Component(config));
-    stream.pipe(Nunjucks(config));
-
-    stream.pipe(vfs.dest(config._DEST_ROOT));
-    stream.on('end', callback);
-};
-Processor.copy = function (config, input, callback) {
-    callback = callback || function() {};
-    let images = input || config.images;
-    let stream = vfs.src(images,
-        { base: config._SOURCE_ROOT});
-
-    stream.pipe(vfs.dest(config._DEST_ROOT));
-    stream.on('end', callback);
-};
-
 function build(config, input, callback) {
+
     // npm run build
     // npm run build app/path/to/dir
     // npm run build app/path/**/*.js
@@ -111,16 +117,22 @@ function build(config, input, callback) {
 
         // 开发环境复制脚本、图片、测试到本地服务器
         if (config._isDev) {
-            s.copy = _.concat(s.copy, s.uglify, config.assets);
+            s.copy = _.concat(s.uglify, config.assets, s.copy);
         }
+
         if (s.uglify.length && config._isPrd) {
             tasks.push(cb => Processor.uglify(config, s.uglify, cb));
         }
         if (s.sass.length) {
             tasks.push(cb => Processor.sass(config, s.sass, cb));
         }
-        if (s.nunjucks.length && config.isDev) {
-            tasks.push(cb => Processor.nunjucks(config, s.nunjucks, cb));
+        if (s.imagemin.length) {
+            tasks.push(cb => Processor.imagemin(config, s.imagemin, cb));
+        }
+        if (s.nunjucks.length) {
+            if (config._arg.nunjucks || config._isDev) {
+                tasks.push(cb => Processor.nunjucks(config, s.nunjucks, cb));
+            }
         }
         if (s.copy.length) {
             tasks.push(cb => Processor.copy(config, s.copy, cb));
@@ -137,12 +149,39 @@ module.exports = function (config, input, callback) {
     input = input || config._arg._[1];
     callback = callback || function() {};
 
-    // npm run build:s => build --sprite
-    if (config._arg.sprite) {
-        Sprite(config, function () {
-            build(config, input, callback);
+    let cmd = config._arg;
+
+    // npm run build:sprite => build --sprite
+    if (cmd.sprite) {
+        return Sprite(config);
+    }
+
+    rimraf.sync(config.dest);
+
+    // npm run build:nunjucks => build --nunjucks
+    if (cmd.nunjucks) {
+        return build(config, config.templates[0], callback);
+    }
+    if (cmd.uglify) {
+        return build(config, config.scripts[0], callback);
+    }
+    if (cmd.sass) {
+        return build(config, config.styles[0], callback);
+    }
+    if (cmd.imagemin) {
+        return build(config, config.images[0], callback);
+    }
+    if (!input) {
+        async.series([
+            cb => Sprite(config, cb),
+            cb => build(config, input, cb)
+        ], function(err) {
+            if (err) return console.log(err);
+            console.log('[DONE] build.');
         });
     } else {
         build(config, input, callback);
     }
 };
+
+module.exports.Processor = Processor;
