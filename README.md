@@ -1,6 +1,6 @@
 # wOw
 
-Wow, it's really awesome.
+#### Wow, it's really awesome.
 
 ```
 ┬ ┬╔═╗┬ ┬
