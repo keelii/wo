@@ -35,7 +35,7 @@ module.exports = {
 
     server: {
         dir: '.www',
-        port: 80,
+        port: 2048,
         index: false
     },
 

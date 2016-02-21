@@ -68,7 +68,7 @@ describe('cli/', function() {
 
         it('should start a local http server.', function (done) {
             start(settings, function(err) {
-                request('http://localhost/', function (error, response, body) {
+                request('http://localhost:2048/', function (error, response, body) {
                     if (error) {
                         throw new Error(error);
                     }
