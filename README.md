@@ -1,13 +1,14 @@
-# wOw
+# Wooo
 
 [![Build Status](https://travis-ci.org/keelii/wo.svg?branch=master)](https://travis-ci.org/keelii/wo)
+[![codecov.io](https://codecov.io/github/keelii/wo/coverage.svg?branch=master)](https://codecov.io/github/keelii/wo?branch=master)
 
-#### Wow, it's really awesome.
+#### Wooo, it's really awesome.
 
 ```
-┬ ┬╔═╗┬ ┬
-│││║ ║│││
-└┴┘╚═╝└┴┘
+┬ ┬╔═╗╔═╗╔═╗
+│││║ ║║ ║║ ║
+└┴┘╚═╝╚═╝╚═╝
 ```
 ## Install globally
 
