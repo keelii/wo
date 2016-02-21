@@ -107,7 +107,6 @@ function getSources(input, config) {
 }
 
 function build(config, input, callback) {
-
     // npm run build
     // npm run build app/path/to/dir
     // npm run build app/path/**/*.js
@@ -151,14 +150,14 @@ module.exports = function (config, input, callback) {
 
     let cmd = config._arg;
 
-    // npm run build:sprite => build --sprite
+    rimraf.sync(config.dest);
+
+    // build --sprite
     if (cmd.sprite) {
         return Sprite(config);
     }
 
-    rimraf.sync(config.dest);
-
-    // npm run build:nunjucks => build --nunjucks
+    // build --nunjucks
     if (cmd.nunjucks) {
         return build(config, config.templates[0], callback);
     }
