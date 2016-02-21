@@ -1,0 +1,32 @@
+@import "__sprite.scss";
+
+h1 {
+    border-bottom: 1px solid #333;
+    padding-bottom: 10px;
+}
+
+a {
+    text-decoration: none;
+}
+body {
+    font: 12px/2em arial;
+    color:#333;
+    background: url(i/bg.png);
+}
+ul {
+    padding-left: 0;
+}
+
+/* icons */
+.icons {
+    i {
+        display: inline-block;
+    }
+    // @include sprites($spritesheet-sprites);
+}
+h1 s {
+    display:inline-block;
+    background:url(../footer/i/npm.png) 0 0 no-repeat;
+    width: 25px;
+    height: 25px;
+}

@@ -61,11 +61,12 @@ const defaults = {
     }
 };
 
-function addRuntimeVal(arg) {
+function addRuntimeVal(arg, configPath, isDev) {
+    configPath = configPath || process.cwd();
     let config = {};
 
     try {
-        config = require(process.cwd() + '/config.js');
+        config = require(path.join(configPath, 'config.js'));
     } catch (err) {
         console.error('Config file not found.');
     }
@@ -74,22 +75,22 @@ function addRuntimeVal(arg) {
 
     options._arg = arg;
     options._cmd = arg._[0];
-    options._CWD = process.cwd();
+    options._CWD = configPath || process.cwd();
     options._VERSION = arg.ver || options.version;
     options._SOURCE_ROOT = path.join(options._CWD, options.source);
-    options._VIEW_ROOT = path.join(options._CWD, options.view);
-    options._SERVER_ROOT = path.join(path.resolve(options.server.dir));
+    options._VIEW_ROOT = path.join(options._SOURCE_ROOT, options.view);
+    options._SERVER_ROOT = path.join(options._CWD, options.server.dir);
 
     // project_name/version_number
     options._PRD_PREFIX = path.join(options.name, options._VERSION);
 
     // Development
-    options._isDev = cmdMap[options._cmd] == 'start';
+    options._isDev = isDev || cmdMap[options._cmd] === 'start';
     // Production
     options._isPrd = /build|release|deploy/.test(cmdMap[options._cmd]);
 
     options._DEST_ROOT = options._isDev
-        ? options.server.dir
+        ? options._SERVER_ROOT
         : path.join(options.dest, options._PRD_PREFIX);
 
     // component data
@@ -98,4 +99,4 @@ function addRuntimeVal(arg) {
     return options;
 }
 
-module.exports = (arg) => addRuntimeVal(arg);
+module.exports = addRuntimeVal;

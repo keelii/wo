@@ -65,11 +65,10 @@ Processor.imagemin = function (config, input, callback) {
 Processor.copy = function (config, input, callback) {
     callback = callback || function() {};
     let source = input || config.assets;
-    let stream = vfs.src(source,
-        { base: config._SOURCE_ROOT});
 
-    stream.pipe(vfs.dest(config._DEST_ROOT));
-    stream.on('end', callback);
+    vfs.src(source, {base: config._SOURCE_ROOT})
+        .pipe(vfs.dest(config._DEST_ROOT))
+        .on('end', callback);
 };
 
 function getSources(input, config) {
@@ -120,13 +119,13 @@ function build(config, input, callback) {
         }
 
         if (s.uglify.length && config._isPrd) {
-            tasks.push(cb => Processor.uglify(config, s.uglify, cb));
+            //tasks.push(cb => Processor.uglify(config, s.uglify, cb));
         }
         if (s.sass.length) {
-            tasks.push(cb => Processor.sass(config, s.sass, cb));
+            //tasks.push(cb => Processor.sass(config, s.sass, cb));
         }
         if (s.imagemin.length) {
-            tasks.push(cb => Processor.imagemin(config, s.imagemin, cb));
+            //tasks.push(cb => Processor.imagemin(config, s.imagemin, cb));
         }
         if (s.nunjucks.length) {
             if (config._arg.nunjucks || config._isDev) {
@@ -134,7 +133,7 @@ function build(config, input, callback) {
             }
         }
         if (s.copy.length) {
-            tasks.push(cb => Processor.copy(config, s.copy, cb));
+            //tasks.push(cb => Processor.copy(config, s.copy, cb));
         }
 
         async.series(tasks, callback);
@@ -154,7 +153,7 @@ module.exports = function (config, input, callback) {
 
     // build --sprite
     if (cmd.sprite) {
-        return Sprite(config);
+        return Sprite(config, callback);
     }
 
     // build --nunjucks
@@ -176,7 +175,7 @@ module.exports = function (config, input, callback) {
             cb => build(config, input, cb)
         ], function(err) {
             if (err) return console.log(err);
-            console.log('[DONE] build.');
+            callback();
         });
     } else {
         build(config, input, callback);

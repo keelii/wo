@@ -1,6 +1,6 @@
 {
   "name": "wooo",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "author": "keelii <keeliizhou@gmail.com>",
   "description": "FE Build tool with easy cli.",
   "license": "MIT",
@@ -12,10 +12,13 @@
   "bin": {
     "wo": "index.js"
   },
+  "engines": {
+    "node": ">=4.0.0"
+  },
   "scripts": {
     "prepublish": "",
     "cover": "istanbul cover ./node_modules/mocha/bin/_mocha -- -R spec && ./node_modules/.bin/codecov",
-    "test": "./node_modules/.bin/mocha test/main.js --reporter spec"
+    "test": "./node_modules/.bin/mocha test/test.js --reporter spec"
   },
   "repository": {
     "type": "git",
@@ -36,7 +39,7 @@
     "nunjucks": "^2.3.0",
     "rimraf": "^2.5.2",
     "spritesmith": "^3.1.0",
-    "static-http-server": "0.0.4",
+    "static-http-server": "0.0.5",
     "uglify-js": "^2.6.1",
     "vinyl-fs": "^2.3.1",
     "vinyl-ftp": "^0.4.5"
@@ -44,6 +47,7 @@
   "devDependencies": {
     "codecov": "^1.0.1",
     "istanbul": "^0.4.2",
-    "mocha": "^2.4.5"
+    "mocha": "^2.4.5",
+    "request": "^2.69.0"
   }
 }

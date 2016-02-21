@@ -12,6 +12,11 @@ A FE Build tool with easy cli.
 │││║ ║║ ║║ ║
 └┴┘╚═╝╚═╝╚═╝
 ```
+
+## Requirement
+
+> "node" : ">=4.0.0"
+
 ## Install globally
 
 > npm install wooo -g

@@ -2,16 +2,23 @@
 const chokidar = require('chokidar');
 const shs = require('static-http-server');
 const build = require('./build');
+
+const async = require('async');
 const utils = require('../lib/utils');
 
-function server(config) {
-    shs(config.server.dir, {
+function server(config, callback) {
+    callback = callback || function() {};
+
+    shs(config._SERVER_ROOT, {
+        nolog: config.nolog,
         index: config.server.index,
         port: config.server.port
-    });
+    }, callback);
 }
 
-function watch(config){
+function watch(config, callback){
+    callback = callback || function() {};
+
     function log(e, rPath) {
         console.log('[%s] => %s', e.toUpperCase(), utils.relativeDir(rPath));
     }
@@ -29,10 +36,16 @@ function watch(config){
         log(event, path);
         build(config, config.templates[0]);
     });
+
+    callback(null);
 }
 
-module.exports = function(config) {
-    build(config);
-    server(config);
-    watch(config);
+module.exports = function(config, callback) {
+    callback = callback || function() {};
+
+    async.series([
+        cb => build(config, null, cb),
+        cb => server(config, cb),
+        cb => watch(config, cb)
+    ], callback);
 };
