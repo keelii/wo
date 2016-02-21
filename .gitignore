@@ -11,6 +11,7 @@ config.gypi
 CVS
 npm-debug.log
 .idea
+coverage
 .vscode
 node_modules
 typings

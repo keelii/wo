@@ -1,6 +1,5 @@
 language: node_js
 node_js:
   - "4.3.1"
-script:
-  - istanbul cover ./node_modules/mocha/bin/_mocha -- -R spec
-  - ./node_modules/.bin/codecov
+after_success:
+  - npm run cover

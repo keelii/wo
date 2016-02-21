@@ -14,6 +14,7 @@
   },
   "scripts": {
     "prepublish": "",
+    "cover": "istanbul cover ./node_modules/mocha/bin/_mocha -- -R spec && ./node_modules/.bin/codecov",
     "test": "./node_modules/.bin/mocha test/main.js --reporter spec"
   },
   "repository": {
@@ -41,6 +42,7 @@
   },
   "devDependencies": {
     "codecov": "^1.0.1",
+    "istanbul": "^0.4.2",
     "mocha": "^2.4.5"
   }
 }
