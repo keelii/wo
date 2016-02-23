@@ -36,10 +36,12 @@ describe('cli/', function() {
         it('should build nunjucks to html', function (done) {
             settings._arg.nunjucks = true;
 
-            assert.equal('<h1>3</h1>\r\n',
-                fs.readFileSync(path.join(settings._DEST_ROOT, settings.view, 'index.html'), 'utf8'));
+            build(settings, null, function () {
+                assert.equal('<h1>3</h1>\r\n',
+                    fs.readFileSync(path.join(settings._DEST_ROOT, settings.view, 'index.html'), 'utf8'));
 
-            done();
+                done();
+            });
         });
     });
 
