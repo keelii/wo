@@ -9,6 +9,11 @@ const request = require('request');
 
 const argv = require('minimist')(process.argv.slice(2));
 
+function readFile(filename) {
+    var content = fs.readFileSync(filename, 'utf8');
+    return content.replace(/^\s+|\s+$/g, '');
+}
+
 describe('cli/', function() {
     describe('#buid() uglify, sass', function () {
         let settings = require('../default')(argv, __dirname);
@@ -19,10 +24,14 @@ describe('cli/', function() {
             settings._DEST_ROOT = path.join(settings._CWD, settings.dest, settings._PRD_PREFIX);
 
             build(settings, null, function () {
-                assert.equal('!function(o){o.location.href="//jd.com"}(window);',
-                    fs.readFileSync(path.join(settings._DEST_ROOT, settings.component.dir, 'main/main.js'), 'utf8'));
-                assert.equal('.icons i{display:inline-block}\n',
-                    fs.readFileSync(path.join(settings._DEST_ROOT, settings.component.dir, 'main/main.css'), 'utf8'));
+                assert.equal(
+                    '!function(o){o.location.href="//jd.com"}(window);',
+                    readFile(path.join(settings._DEST_ROOT, settings.component.dir, 'main/main.js'))
+                );
+                assert.equal(
+                    '.icons i{display:inline-block}',
+                    readFile(path.join(settings._DEST_ROOT, settings.component.dir, 'main/main.css'))
+                );
 
                 done();
             });
@@ -37,8 +46,10 @@ describe('cli/', function() {
             settings._arg.nunjucks = true;
 
             build(settings, null, function () {
-                assert.equal('<h1>3</h1>\r\n',
-                    fs.readFileSync(path.join(settings._DEST_ROOT, settings.view, 'index.html'), 'utf8'));
+                assert.equal(
+                    '<h1>3</h1>',
+                    readFile(path.join(settings._DEST_ROOT, settings.view, 'index.html'))
+                );
 
                 done();
             });
@@ -74,9 +85,10 @@ describe('cli/', function() {
 
         it('should compress script file', function(done) {
             Processor.uglify(config, 'test/src/test.uglify.js', function() {
-                let result = fs.readFileSync('test/result/test.uglify.js', 'utf8');
-
-                assert.equal(result, '!function(){var o="hello world.";return o.length>0?o.toLocaleLowerCase():void 0}();');
+                assert.equal(
+                    '!function(){var o="hello world.";return o.length>0?o.toLocaleLowerCase():void 0}();',
+                    readFile('test/result/test.uglify.js')
+                );
                 done();
             });
         });
@@ -84,15 +96,19 @@ describe('cli/', function() {
             Processor.sass(config, 'test/src/test.sass.scss', function() {
                 let result = fs.readFileSync('test/result/test.sass.css', 'utf8');
 
-                assert.equal(result, 'body{text-align:center}body ul{list-style:none}\n');
+                assert.equal(
+                    'body{text-align:center}body ul{list-style:none}',
+                    readFile('test/result/test.sass.css')
+                );
                 done();
             });
         });
         it('should complie nunjucks to html file', function(done) {
             Processor.nunjucks(config, 'test/src/test.nunjucks.html', function() {
-                let result = fs.readFileSync('test/result/test.nunjucks.html', 'utf8');
-
-                assert.equal(result, '<div id="box">3</div>');
+                assert.equal(
+                    '<div id="box">3</div>',
+                    readFile('test/result/test.nunjucks.html')
+                );
                 done();
             });
         });
