@@ -7,26 +7,67 @@ const rimraf = require('rimraf');
 const async = require('async');
 const request = require('request');
 
+const argv = require('minimist')(process.argv.slice(2));
+
 describe('cli/', function() {
-    let config = {
-        source: path.join(__dirname, 'src'),
-        _SOURCE_ROOT: path.join(__dirname, 'src'),
-        _DEST_ROOT: path.join(__dirname, 'result'),
-        view: 'views',
-        _isPrd: false,
-        production: 'http://jd.com/',
-        _PRD_PREFIX: 'path/cdn',
+    describe('#buid() uglify, sass', function () {
+        let settings = require('../default')(argv, __dirname);
+        let build = require('../cli/build');
 
-        component: {
-            dir: 'components',
-            config: 'config.js',
-            test: '.test.html'
-        },
+        it('should build file to targets', function(done) {
+            settings._isPrd = true;
+            settings._DEST_ROOT = path.join(settings._CWD, settings.dest, settings._PRD_PREFIX);
 
-        _components: {}
-    };
+            build(settings, null, function () {
+                assert.equal('!function(o){o.location.href="//jd.com"}(window);',
+                    fs.readFileSync(path.join(settings._DEST_ROOT, settings.component.dir, 'main/main.js'), 'utf8'));
+                assert.equal('.icons i{display:inline-block}\n',
+                    fs.readFileSync(path.join(settings._DEST_ROOT, settings.component.dir, 'main/main.css'), 'utf8'));
+
+                done();
+            });
+        });
+    });
+
+    describe('#buid() - nunjucks', function () {
+        let settings = require('../default')(argv, __dirname);
+        let build = require('../cli/build');
+
+        it('should build nunjucks to html', function (done) {
+            settings._arg.nunjucks = true;
+
+            assert.equal('<h1>3</h1>\r\n',
+                fs.readFileSync(path.join(settings._DEST_ROOT, settings.view, 'index.html'), 'utf8'));
+
+            done();
+        });
+    });
 
     describe('build.Processor', function() {
+        let config = {
+            source: 'src',
+
+            production: 'http://jd.com/',
+            view: 'views',
+            dest: 'result',
+            sprites: {
+                cssName: '__sprite.scss',
+                imgName: 'i/__sprite.png',
+                items: []
+            },
+
+            component: {
+                dir: 'components',
+                config: 'config.js',
+                test: '.test.html'
+            },
+
+            _isPrd: false,
+            _PRD_PREFIX: 'path/cdn',
+            _SOURCE_ROOT: path.join(__dirname, 'src'),
+            _DEST_ROOT: path.join(__dirname, 'result'),
+            _components: {}
+        };
         const Processor = require('../cli/build').Processor;
 
         it('should compress script file', function(done) {
@@ -53,20 +94,39 @@ describe('cli/', function() {
                 done();
             });
         });
-
-        // clearn up
-        after(function() {
-            rimraf.sync('test/result');
-        });
     });
 
     describe('Start', function() {
-        const argv = require('minimist')(process.argv.slice(2));
-        const settings = require('../default')(argv, __dirname, true);
+        let config = {
+            source: 'src',
 
-        const start = require('../cli/start');
+            production: 'http://jd.com/',
+            view: 'views',
+            dest: 'result',
+            sprites: {
+                cssName: '__sprite.scss',
+                imgName: 'i/__sprite.png',
+                items: []
+            },
+
+            component: {
+                dir: 'components',
+                config: 'config.js',
+                test: '.test.html'
+            },
+
+            _isPrd: false,
+            _PRD_PREFIX: 'path/cdn',
+            _SOURCE_ROOT: path.join(__dirname, 'src'),
+            _DEST_ROOT: path.join(__dirname, 'result'),
+            _components: {}
+        };
+        let start = require('../cli/start');
+        let settings = require('../default')(argv, __dirname);
 
         it('should start a local http server.', function (done) {
+            settings._DEST_ROOT = settings._SERVER_ROOT;
+
             start(settings, function(err) {
                 request('http://localhost:2048/', function (error, response, body) {
                     if (error) {
@@ -104,6 +164,7 @@ describe('cli/', function() {
     after(function () {
         rimraf.sync('test/.www');
         rimraf.sync('test/build');
+        rimraf.sync('test/result');
     });
 });
 

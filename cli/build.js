@@ -119,13 +119,13 @@ function build(config, input, callback) {
         }
 
         if (s.uglify.length && config._isPrd) {
-            //tasks.push(cb => Processor.uglify(config, s.uglify, cb));
+            tasks.push(cb => Processor.uglify(config, s.uglify, cb));
         }
         if (s.sass.length) {
-            //tasks.push(cb => Processor.sass(config, s.sass, cb));
+            tasks.push(cb => Processor.sass(config, s.sass, cb));
         }
         if (s.imagemin.length) {
-            //tasks.push(cb => Processor.imagemin(config, s.imagemin, cb));
+            tasks.push(cb => Processor.imagemin(config, s.imagemin, cb));
         }
         if (s.nunjucks.length) {
             if (config._arg.nunjucks || config._isDev) {
@@ -133,9 +133,8 @@ function build(config, input, callback) {
             }
         }
         if (s.copy.length) {
-            //tasks.push(cb => Processor.copy(config, s.copy, cb));
+            tasks.push(cb => Processor.copy(config, s.copy, cb));
         }
-
         async.series(tasks, callback);
     } else if (utils.isFile(input))  {
         // npm run build app/path/to/file.js

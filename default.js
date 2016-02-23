@@ -61,7 +61,7 @@ const defaults = {
     }
 };
 
-function addRuntimeVal(arg, configPath, isDev) {
+function addRuntimeVal(arg, configPath) {
     configPath = configPath || process.cwd();
     let config = {};
 
@@ -85,13 +85,13 @@ function addRuntimeVal(arg, configPath, isDev) {
     options._PRD_PREFIX = path.join(options.name, options._VERSION);
 
     // Development
-    options._isDev = isDev || cmdMap[options._cmd] === 'start';
+    options._isDev = options._arg.development || cmdMap[options._cmd] === 'start';
     // Production
-    options._isPrd = /build|release|deploy/.test(cmdMap[options._cmd]);
+    options._isPrd = options._arg.production || /build|release|deploy/.test(cmdMap[options._cmd]);
 
     options._DEST_ROOT = options._isDev
         ? options._SERVER_ROOT
-        : path.join(options.dest, options._PRD_PREFIX);
+        : path.join(options._CWD, options.dest, options._PRD_PREFIX);
 
     // component data
     options._components = {};
