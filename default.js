@@ -18,7 +18,7 @@ const defaults = {
 
     scripts: ['app/components/**/*.js'],
     styles: ['app/components/**/*.scss'],
-    images: ['app/components/**/i/*.+(|jpg|png|gif)'],
+    images: ['app/components/**/i/*.+(|png|gif)'],
     templates: ['app/views/*.html'],
     sprites: {
         cssName: '__sprite.scss',
@@ -80,6 +80,7 @@ function addRuntimeVal(arg, configPath) {
     options._SOURCE_ROOT = path.join(options._CWD, options.source);
     options._VIEW_ROOT = path.join(options._SOURCE_ROOT, options.view);
     options._SERVER_ROOT = path.join(options._CWD, options.server.dir);
+    options._WO_ROOT = __dirname;
 
     // project_name/version_number
     options._PRD_PREFIX = path.join(options.name, options._VERSION);

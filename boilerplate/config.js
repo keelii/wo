@@ -1,5 +1,5 @@
-const config = {
-    name: 'Foo',
+var config = {
+    name: 'Foo'
 };
 
 module.exports = config;

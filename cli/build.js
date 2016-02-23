@@ -5,6 +5,7 @@ const Sass = require('../lib/sass');
 const Nunjucks = require('../lib/nunjucks');
 const Component = require('../lib/component');
 const Sprite = require('../lib/sprite');
+const pngquant = require('../lib/pngquant');
 const rebasePath = require('../lib/rebasePath');
 
 const rimraf = require('rimraf');
@@ -55,12 +56,11 @@ Processor.nunjucks = function (config, input, callback) {
 Processor.imagemin = function (config, input, callback) {
     callback = callback || function() {};
     let source = input || config.images;
-    let stream = vfs.src(source,
-        { base: config._SOURCE_ROOT});
 
-    // 后期添加优化功能
-    stream.pipe(vfs.dest(config._DEST_ROOT));
-    stream.on('end', callback);
+    vfs.src(source, {base: config._SOURCE_ROOT})
+        .pipe(pngquant({quality: '65-80', speed: 4})())
+        .pipe(vfs.dest(config._DEST_ROOT))
+        .on('end', callback);
 };
 Processor.copy = function (config, input, callback) {
     callback = callback || function() {};

@@ -5,7 +5,7 @@ module.exports = function (config, callback) {
     callback = callback || function() {};
 
     async.each([
-        config._DEST_ROOT,
+        config.dest,
         config._SERVER_ROOT
     ], rimraf, callback);
 };
