@@ -68,7 +68,7 @@ function addRuntimeVal(arg, configPath) {
     try {
         config = require(path.join(configPath, 'config.js'));
     } catch (err) {
-        console.error('Config file not found.');
+        console.info('Config file not found. try [wo gen] to generate a demo project.');
     }
 
     let options = _.defaultsDeep(config, defaults);

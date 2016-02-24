@@ -8,7 +8,7 @@ const Sprite = require('../lib/sprite');
 const pngquant = require('../lib/pngquant');
 const rebasePath = require('../lib/rebasePath');
 
-const rimraf = require('rimraf');
+const fse = require('fs-extra');
 const async = require('async');
 const globby = require('globby');
 const isGlob = require('is-glob');
@@ -148,7 +148,7 @@ module.exports = function (config, input, callback) {
 
     let cmd = config._arg;
 
-    rimraf.sync(config.dest);
+    fse.removeSync(config.dest);
 
     // build --sprite
     if (cmd.sprite) {

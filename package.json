@@ -1,6 +1,6 @@
 {
   "name": "wooo",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "author": "keelii <keeliizhou@gmail.com>",
   "description": "FE Build tool with easy cli.",
   "license": "MIT",
@@ -29,6 +29,7 @@
     "async": "^1.5.2",
     "chalk": "^1.1.1",
     "chokidar": "^1.4.2",
+    "fs-extra": "^0.26.5",
     "globby": "^4.0.0",
     "imagemin-pngquant": "^4.2.2",
     "is-glob": "^2.0.1",
@@ -37,7 +38,6 @@
     "minimist": "^1.2.0",
     "node-sass": "^3.4.2",
     "nunjucks": "^2.3.0",
-    "rimraf": "^2.5.2",
     "spritesmith": "^3.1.0",
     "static-http-server": "0.0.5",
     "uglify-js": "^2.6.1",

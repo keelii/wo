@@ -3,7 +3,7 @@ const fs = require('fs');
 const path = require('path');
 const assert = require("assert");
 
-const rimraf = require('rimraf');
+const fse = require('fs-extra');
 const async = require('async');
 const request = require('request');
 
@@ -58,6 +58,7 @@ describe('cli/', function() {
 
     describe('build.Processor', function() {
         let config = {
+            nolog: true,
             source: 'src',
 
             production: 'http://jd.com/',
@@ -111,6 +112,15 @@ describe('cli/', function() {
                 );
                 done();
             });
+        });
+        it('should compress png file', function(done) {
+            Processor.imagemin(config, 'test/src/test.imagemin.png', function () {
+                assert.equal(true, fs.existsSync('test/result/test.imagemin.png'));
+                assert.equal(true,
+                    fs.statSync('test/src/test.imagemin.png').size > fs.statSync('test/result/test.imagemin.png').size
+                );
+                done();
+            })
         });
     });
 
@@ -179,10 +189,22 @@ describe('cli/', function() {
         });
     });
 
+    describe('Gen', function () {
+        let settings = require('../default')(argv, __dirname);
+        const gen = require('../cli/gen');
+        it('should generate a new project named test_proj.', function (done) {
+            gen(settings, 'test_proj', function () {
+                assert.equal(true, fs.existsSync(path.join(process.cwd(), 'test_proj')));
+                done();
+            });
+        });
+    });
+
     after(function () {
-        rimraf.sync('test/.www');
-        rimraf.sync('test/build');
-        rimraf.sync('test/result');
+        fse.removeSync('test/.www');
+        fse.removeSync('test/build');
+        fse.removeSync('test/result');
+        fse.removeSync('test_proj');
     });
 });
 
