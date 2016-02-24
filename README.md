@@ -30,11 +30,13 @@ command:
   release   - build && taged git source
   start     - build && start a local server with default root [.www]
   clear     - by default, rm -rf build .www
+  gen       - generate a new demo project
 
 input:
   path/to/dir
   glob/pattern/**
   path/to/file.ext
+  gen_project_name
 
 options:
   --sprite      - concat sprites to one image and generate a style file
@@ -55,6 +57,7 @@ options:
     "build:sprite": "node ./node_modules/wooo build --sprite",
     "deploy": "node ./node_modules/wooo deploy",
     "release": "node ./node_modules/wooo release",
-    "clear": "node ./node_modules/wooo clear"
+    "clear": "node ./node_modules/wooo clear",
+    "gen": "node ./node_modules/wooo gen"
 }
 ```
