@@ -231,7 +231,7 @@ describe('lib/', function() {
                 assert.equal('copy', utils.getProcessor('test.cur'));
             });
         });
-        describe('#getProcessor()', function () {
+        describe('#hasContents()', function () {
             it('should not hasContents.', function () {
                 assert.equal(false, utils.hasContents(__dirname + '/empty.js'));
             });
@@ -265,6 +265,33 @@ describe('lib/', function() {
         describe('#getTag()', function () {
             it('should a script tag', function () {
                 assert.equal('<script src="{{source}}"></script>', utils.getTag('script'));
+            });
+            it('should a div tag', function () {
+                assert.equal('<div></div>', utils.getTag('div'));
+            });
+        });
+        describe('#isFile()', function () {
+            it('should return false', function () {
+                assert.equal(
+                    false,
+                    utils.isFile('wrong file'));
+            });
+            it('should return true', function () {
+                assert.equal(
+                    true,
+                    utils.isFile(__filename));
+            })
+        });
+        describe('#isDir()', function () {
+            it('should return false', function () {
+                assert.equal(
+                    false,
+                    utils.isDir('wrong file'));
+            });
+            it('should return true', function () {
+                assert.equal(
+                    true,
+                    utils.isDir(__dirname));
             })
         });
     });
