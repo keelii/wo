@@ -19,7 +19,7 @@ function deploy(config, callback) {
     let conn = ftp.create(ftpConfig);
 
     vfs.src(ftpConfig.src, {
-        base: config._DEST_ROOT,
+        base: config.dest,
         buffer: false
     })
     .pipe(conn.newer(ftpConfig.dest))

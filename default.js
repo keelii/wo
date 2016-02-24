@@ -39,7 +39,7 @@ const defaults = {
     templateRefs:  ['app/components/*/*.html', 'app/views/*/*.html'],
 
     tests: ['app/tests/**'],
-    assets: ['app/components/**/*.cur'],
+    assets: ['app/components/**/*.+(|css|cur)'],
     globalIgnore: ['!app/components/*/config.js'],
     watchIgnore: /\/maco\/|\/layout\/|config\.js|node_modules/,
 
