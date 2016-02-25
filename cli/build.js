@@ -138,7 +138,7 @@ function build(config, input, callback) {
         async.series(tasks, callback);
     } else if (utils.isFile(input))  {
         // npm run build app/path/to/file.js
-        Processor[utils.getProcessor(input)](config, input)
+        Processor[utils.getProcessor(input)](config, input, callback);
     }
 }
 
