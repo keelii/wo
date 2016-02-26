@@ -4,6 +4,7 @@ const fse = require('fs-extra');
 const chalk = require('chalk');
 
 module.exports = function (config, pName, callback) {
+    callback = callback || function(){};
     pName = pName || config._arg._[1] || 'project';
 
     fse.copy(
@@ -21,5 +22,4 @@ module.exports = function (config, pName, callback) {
             callback(null);
         }
     );
-
 };

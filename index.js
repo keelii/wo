@@ -21,6 +21,7 @@ command:
   release   ${chalk.gray('- build && taged git source')}
   start     ${chalk.gray('- build && start a local server with default root [.www]')}
   clear     ${chalk.gray('- by default, rm -rf build .www')}
+  gen       ${chalk.gray('- generate a new demo project')}
 
 input:
   path/to/dir
