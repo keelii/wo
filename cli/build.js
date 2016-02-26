@@ -7,6 +7,7 @@ const Component = require('../lib/component');
 const Sprite = require('../lib/sprite');
 const pngquant = require('../lib/pngquant');
 const rebasePath = require('../lib/rebasePath');
+const cleanCSS = require('../lib/cleanCSS');
 
 const fse = require('fs-extra');
 const async = require('async');
@@ -39,6 +40,9 @@ Processor.sass = function (config, input, callback) {
             enabled: config._isPrd,
             base: config._SOURCE_ROOT,
             prefix: config.production + utils.dirToPath(config._PRD_PREFIX)
+        }))
+        .pipe(cleanCSS({
+            enabled: config._isPrd
         }))
         .pipe(vfs.dest(config._DEST_ROOT))
         .on('end', callback);

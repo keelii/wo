@@ -1,6 +1,6 @@
 {
   "name": "wooo",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "author": "keelii <keeliizhou@gmail.com>",
   "description": "FE Build tool with easy cli.",
   "license": "MIT",
@@ -29,6 +29,7 @@
     "async": "^1.5.2",
     "chalk": "^1.1.1",
     "chokidar": "^1.4.2",
+    "clean-css": "^3.4.9",
     "fs-extra": "^0.26.5",
     "globby": "^4.0.0",
     "imagemin-pngquant": "^4.2.2",
