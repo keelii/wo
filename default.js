@@ -23,10 +23,7 @@ const defaults = {
     sprites: {
         cssName: '__sprite.scss',
         imgName: 'i/__sprite.png',
-        items: [
-            'app/components/main/**/sprite-*.png',
-            'app/components/footer/**/sprite-*.png'
-        ]
+        items: []
     },
 
     source: 'app',

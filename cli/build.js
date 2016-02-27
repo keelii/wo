@@ -36,13 +36,13 @@ Processor.sass = function (config, input, callback) {
 
     vfs.src(source, { base: config._SOURCE_ROOT})
         .pipe(Sass())
+        .pipe(cleanCSS({
+            enabled: config._isPrd
+        }))
         .pipe(rebasePath({
             enabled: config._isPrd,
             base: config._SOURCE_ROOT,
             prefix: config.production + utils.dirToPath(config._PRD_PREFIX)
-        }))
-        .pipe(cleanCSS({
-            enabled: config._isPrd
         }))
         .pipe(vfs.dest(config._DEST_ROOT))
         .on('end', callback);
