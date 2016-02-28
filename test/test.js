@@ -85,6 +85,7 @@ describe('cli/', function() {
         const Processor = require('../cli/build').Processor;
 
         it('should compress script file', function(done) {
+            config._isPrd = true;
             Processor.uglify(config, 'test/src/test.uglify.js', function() {
                 assert.equal(
                     '!function(){var o="hello world.";return o.length>0?o.toLocaleLowerCase():void 0}();',
