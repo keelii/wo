@@ -42,8 +42,9 @@ options:
   --sprite      - concat sprites to one image and generate a style file
   --nunjucks    - compile nunjucks to html
   --uglify      - compress scripts
-  --imagemin    - optmize images
+  --imagemin    - optimize images
   --sass        - compile sass to css
+  --debug       - build uncompressed js file
 ```
 
 ## Bundled with npm scripts

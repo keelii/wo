@@ -23,7 +23,7 @@ Processor.uglify = function (config, input, callback) {
 
     vfs.src(source, { base: config._SOURCE_ROOT})
         .pipe(Uglify({
-            enabled: config._isPrd,
+            enabled: config._isPrd && !config._isDbg,
             mangle: {
                 except: ['define', 'require', 'module', 'exports']
             }

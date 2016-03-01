@@ -34,6 +34,7 @@ options:
   --uglify      ${chalk.gray('- compress scripts')}
   --imagemin    ${chalk.gray('- optmize images')}
   --sass        ${chalk.gray('- compile sass to css')}
+  --debug       ${chalk.gray('- build uncompressed js file')}
 `;
 
 if (argv.h) {

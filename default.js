@@ -84,6 +84,9 @@ function addRuntimeVal(arg, configPath) {
     // project_name/version_number
     options._PRD_PREFIX = path.join(options.name, options._VERSION);
 
+    // Debug mode
+    options._isDbg = options._arg.debug;
+
     // Development
     options._isDev = options._arg.development || cmdMap[options._cmd] === 'start';
     // Production
