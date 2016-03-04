@@ -45,6 +45,7 @@ options:
   --imagemin    - optimize images
   --sass        - compile sass to css
   --debug       - build uncompressed js file
+  --force       - deploy file with no cache
 ```
 
 ## Bundled with npm scripts

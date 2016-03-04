@@ -1,5 +1,6 @@
 'use strict';
 const vfs = require('vinyl-fs');
+const map = require('map-stream');
 const ftp   = require('vinyl-ftp');
 const build   = require('./build');
 
@@ -18,11 +19,17 @@ function deploy(config, callback) {
 
     let conn = ftp.create(ftpConfig);
 
+    function cached(enabled) {
+        return enabled ? conn.newer(ftpConfig.dest) : map(function(file, cb) {
+            cb(null, file);
+        });
+    }
+
     vfs.src(ftpConfig.src, {
         base: config.dest,
         buffer: false
     })
-    .pipe(conn.newer(ftpConfig.dest))
+    .pipe(cached(!config._isForce))
     .pipe(conn.dest(ftpConfig.dest))
     .on('end', callback);
 }

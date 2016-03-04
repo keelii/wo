@@ -16,6 +16,12 @@ const defaults = {
 
     production: 'http://your.domain.com/cdn-path/',
 
+    /* 压缩文件头注释, 感叹号(!)打头的注释不会被压缩 */
+    /* ----- example ----- */
+    /*!Name: base.js
+     * Date: 2015-51-20 17:21:6 */
+    banner: '/*!Name: {{ name }}\n * Date: {{ date }} */\n',
+
     scripts: ['app/components/**/*.js'],
     styles: ['app/components/**/*.scss'],
     images: ['app/components/**/i/*.+(|png|gif)'],
@@ -55,7 +61,9 @@ const defaults = {
         parallel: 5,
         src: 'build/**',
         dest: './'
-    }
+    },
+
+    release: 'git pull origin master && git tag {tag} && git push origin master --tag'
 };
 
 function addRuntimeVal(arg, configPath) {
@@ -85,7 +93,9 @@ function addRuntimeVal(arg, configPath) {
     options._PRD_PREFIX = path.join(options.name, options._VERSION);
 
     // Debug mode
-    options._isDbg = options._arg.debug;
+    options._isDebug = options._arg.debug;
+    // Force mode
+    options._isForce = options._arg.force;
 
     // Development
     options._isDev = options._arg.development || cmdMap[options._cmd] === 'start';

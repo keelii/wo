@@ -8,6 +8,7 @@ const Sprite = require('../lib/sprite');
 const pngquant = require('../lib/pngquant');
 const rebasePath = require('../lib/rebasePath');
 const cleanCSS = require('../lib/cleanCSS');
+const banner = require('../lib/banner');
 
 const fse = require('fs-extra');
 const async = require('async');
@@ -23,10 +24,14 @@ Processor.uglify = function (config, input, callback) {
 
     vfs.src(source, { base: config._SOURCE_ROOT})
         .pipe(Uglify({
-            enabled: config._isPrd && !config._isDbg,
+            enabled: config._isPrd && !config._isDebug,
             mangle: {
                 except: ['define', 'require', 'module', 'exports']
             }
+        }))
+        .pipe(banner({
+            enabled: config._isPrd,
+            template: config.banner
         }))
         .pipe(vfs.dest(config._DEST_ROOT))
         .on('end', callback);
@@ -44,6 +49,10 @@ Processor.sass = function (config, input, callback) {
             enabled: config._isPrd,
             base: config._SOURCE_ROOT,
             prefix: config.production + utils.dirToPath(config._PRD_PREFIX)
+        }))
+        .pipe(banner({
+            enabled: config._isPrd,
+            template: config.banner
         }))
         .pipe(vfs.dest(config._DEST_ROOT))
         .on('end', callback);

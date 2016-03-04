@@ -35,6 +35,7 @@ options:
   --imagemin    ${chalk.gray('- optmize images')}
   --sass        ${chalk.gray('- compile sass to css')}
   --debug       ${chalk.gray('- build uncompressed js file')}
+  --force       ${chalk.gray('- deploy file with no cache')}
 `;
 
 if (argv.h) {
