@@ -1,23 +1,33 @@
 'use strict';
 const vfs = require('vinyl-fs');
 const exec = require('child_process').exec;
-const build   = require('./build');
-const _ = require('lodash');
+//const build   = require('./build');
+//const _ = require('lodash');
 
 function release(config, callback) {
     // TODO
-    var cmd = config.release;
+    var cmds = config.release.cmds;
 
+    //console.log('[%s]', cmds.join(' && '));
+    const child = exec(cmds.join(' && '), (error, stdout, stderr) => {
+
+        console.log(`stdout:\n ${stdout}`);
+        console.log(`stderr:\n ${stderr}`);
+        if (error !== null) {
+            console.log(`exec error: ${error}`);
+        }
+    });
 }
 
 module.exports = function(config, input) {
-    input = input || config._arg._[1];
+    //input = input || config._arg._[1];
 
-    console.log('Building sources\n...');
-    build(config, input, function() {
-        console.log('Build done. \nReleasing new version to repo\n...');
+    return 'to be done.';
+    //console.log('Building sources\n...');
+    //build(config, input, function() {
+    //    console.log('Build done. \nReleasing new version to repo\n...');
         release(config, function() {
-            console.log('Release done.');
+            //console.log('Release done.');
         });
-    });
+    //});
 };

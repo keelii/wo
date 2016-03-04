@@ -63,7 +63,17 @@ const defaults = {
         dest: './'
     },
 
-    release: 'git pull origin master && git tag {tag} && git push origin master --tag'
+    release: {
+        cmds: [
+            'git status'
+            //'git commit .',
+            //'git status'
+            //'git pull origin master',
+            //'git tag {tag}',
+            //'git push origin master --tag'
+        ],
+        dest: ''
+    }
 };
 
 function addRuntimeVal(arg, configPath) {

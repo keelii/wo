@@ -64,6 +64,7 @@ describe('cli/', function() {
             production: 'http://jd.com/',
             view: 'views',
             dest: 'result',
+            banner: '',
             sprites: {
                 cssName: '__sprite.scss',
                 imgName: 'i/__sprite.png',

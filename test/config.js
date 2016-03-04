@@ -4,6 +4,7 @@ module.exports = {
 
     production: 'http://your.domain.com/cdn-path/',
 
+    banner: '',
     scripts: ['test/app/components/**/*.js'],
     styles: ['test/app/components/**/*.scss'],
     images: ['test/app/components/**/i/*.+(|jpg|png|gif)'],
