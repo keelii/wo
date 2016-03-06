@@ -46,6 +46,7 @@ options:
   --sass        - compile sass to css
   --debug       - build uncompressed js file
   --force       - deploy file with no cache
+  --currdir     - generate demo project file to current directory
 ```
 
 ## Bundled with npm scripts

@@ -6,12 +6,6 @@ const chalk = require('chalk');
 const utils = require('./lib/utils');
 const pkg = require('./package');
 
-const logo = `
-┬ ┬╔═╗╔═╗╔═╗
-│││║ ║║ ║║ ║
-└┴┘╚═╝╚═╝╚═╝
--------${pkg.version}`;
-
 const help = `
 Usage: wo <command> <input> <options>
 
@@ -36,7 +30,14 @@ options:
   --sass        ${chalk.gray('- compile sass to css')}
   --debug       ${chalk.gray('- build uncompressed js file')}
   --force       ${chalk.gray('- deploy file with no cache')}
+  --currdir     ${chalk.gray('- generate demo project file to current directory')}
 `;
+
+const logo = `
+┬ ┬╔═╗╔═╗╔═╗
+│││║ ║║ ║║ ║
+└┴┘╚═╝╚═╝╚═╝
+-------${pkg.version}`;
 
 if (argv.h) {
     return console.log(help);

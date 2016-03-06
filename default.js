@@ -65,14 +65,10 @@ const defaults = {
 
     release: {
         cmds: [
-            'git status'
-            //'git commit .',
-            //'git status'
-            //'git pull origin master',
-            //'git tag {tag}',
-            //'git push origin master --tag'
+            'git pull origin master',
+            'git tag {tag}'
         ],
-        dest: ''
+        dest: 'build'
     }
 };
 
@@ -84,7 +80,7 @@ function addRuntimeVal(arg, configPath) {
         config = require(path.join(configPath, 'config.js'));
     } catch (err) {
         if (cmdMap[arg._[0]] != 'gen') {
-            console.info('Config file not found. try [wo gen] to generate a demo project.');
+            console.info('Config file not found. Make sure your cwd has config.js file.');
         }
     }
 
@@ -111,11 +107,19 @@ function addRuntimeVal(arg, configPath) {
     options._isDev = options._arg.development || cmdMap[options._cmd] === 'start';
     // Production
     options._isPrd = options._arg.production || /build|release|deploy/.test(cmdMap[options._cmd]);
+    // Release
+    options._isRel = cmdMap[options._cmd] === 'release';
 
-    options._DEST_ROOT = options._isDev
-        ? options._SERVER_ROOT
-        : path.join(options._CWD, options.dest, options._PRD_PREFIX);
-
+    options._DEST_ROOT = path.resolve(options.dest);
+    if (options._isDev) {
+        options._DEST_ROOT = options._SERVER_ROOT;
+    }
+    if (options._isPrd) {
+        options._DEST_ROOT = path.join(options._CWD, options.dest, options._PRD_PREFIX);
+    }
+    if (options._isRel) {
+        options._DEST_ROOT = path.join(options._CWD, options.release.dest, options._PRD_PREFIX);
+    }
     // component data
     options._components = {};
 
