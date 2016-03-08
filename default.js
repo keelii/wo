@@ -122,6 +122,7 @@ function addRuntimeVal(arg, configPath) {
     }
     // component data
     options._components = {};
+    options._sass = {};
 
     return options;
 }

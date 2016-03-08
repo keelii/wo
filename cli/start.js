@@ -4,7 +4,12 @@ const shs = require('static-http-server');
 const build = require('./build');
 
 const async = require('async');
+const _ = require('lodash');
 const utils = require('../lib/utils');
+
+function log(e, rPath) {
+    console.log('[%s] => %s', e.toUpperCase(), utils.relativeDir(rPath));
+}
 
 function server(config, callback) {
     callback = callback || function() {};
@@ -19,10 +24,9 @@ function server(config, callback) {
 function watch(config, callback){
     callback = callback || function() {};
 
-    function log(e, rPath) {
-        console.log('[%s] => %s', e.toUpperCase(), utils.relativeDir(rPath));
-    }
-    chokidar.watch(config._SOURCE_ROOT, {
+    var targets = _.concat();
+
+    config.watcher = chokidar.watch(config._SOURCE_ROOT, {
         ignored: config.watchIgnore,
         ignoreInitial: true
     }).on('all', (event, path) => {
@@ -39,6 +43,34 @@ function watch(config, callback){
 
     callback(null);
 }
+function watchRefs(config) {
+    var result = _.transform(config._sass, (result, values, key) => {
+        values.forEach(function (value) {
+            if (!result[value]) {
+                result[value] = [];
+            }
+
+            result[value].push(key);
+        });
+    });
+
+    function watch(tar, des) {
+        config.watcher.unwatch(tar);
+        chokidar.watch(tar, {
+            ignored: config.watchIgnore,
+            ignoreInitial: true
+        }).on('all', (event, path) => {
+            log(event, path);
+            build(config, des.concat(tar));
+        });
+    }
+
+    for ( var key in result ) {
+        if ( result.hasOwnProperty(key) ) {
+            watch(key, result[key]);
+        }
+    }
+}
 
 module.exports = function(config, callback) {
     callback = callback || function() {};
@@ -47,5 +79,12 @@ module.exports = function(config, callback) {
         cb => build(config, null, cb),
         cb => server(config, cb),
         cb => watch(config, cb)
-    ], callback);
+    ], function (err) {
+        if (err) {
+            console.error(err);
+        }
+
+        watchRefs(config);
+        callback();
+    });
 };

@@ -41,9 +41,12 @@ Processor.sass = function (config, input, callback) {
     let source = input || config.styles;
 
     vfs.src(source, { base: config._SOURCE_ROOT})
-        .pipe(Sass())
+        .pipe(Sass({
+            config: config,
+            debug: config._isDebug
+        }))
         .pipe(cleanCSS({
-            enabled: config._isPrd
+            enabled: config._isDebug ? false: config._isPrd
         }))
         .pipe(rebasePath({
             enabled: config._isPrd,
@@ -95,7 +98,7 @@ function getSources(input, config) {
         imagemin: [],
         copy: []
     };
-    let targets = null;
+    let files = null;
 
     if (!input) {
         return  {
@@ -108,12 +111,12 @@ function getSources(input, config) {
     }
 
     if (isGlob(input)) {
-        targets = _.concat([input], config.globalIgnore);
+        files = globby.sync(_.concat([input], config.globalIgnore), globOption);
     } else if (utils.isDir(input)) {
-        targets = _.concat([input + '/**'], config.globalIgnore);
+        files = globby.sync(_.concat([input + '/**'], config.globalIgnore), globOption);
+    } else if (Array.isArray(input)) {
+        files = input;
     }
-
-    let files = globby.sync(targets, globOption);
 
     files.forEach(f => sources[utils.getProcessor(f)].push(f));
     return sources;
@@ -123,7 +126,7 @@ function build(config, input, callback) {
     // npm run build
     // npm run build app/path/to/dir
     // npm run build app/path/**/*.js
-    if (!input || isGlob(input) || utils.isDir(input)) {
+    if (!input || Array.isArray(input) || isGlob(input) || utils.isDir(input)) {
         let s = getSources(input, config);
         let tasks = [];
 
