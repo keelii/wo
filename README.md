@@ -3,6 +3,7 @@
 [![Wooo Version](https://img.shields.io/npm/v/wooo.svg)](https://www.npmjs.com/package/wooo)
 [![Build Status](https://travis-ci.org/keelii/wo.svg?branch=master)](https://travis-ci.org/keelii/wo)
 [![codecov.io](https://codecov.io/github/keelii/wo/coverage.svg?branch=master)](https://codecov.io/github/keelii/wo?branch=master)
+[![dependencies up to date](https://david-dm.org/keelii/wo)](https://david-dm.org/keelii/wo.svg)
 [![License](https://img.shields.io/npm/l/wooo.svg)](https://www.npmjs.com/package/wooo)
 
 A FE Build tool with easy cli.

@@ -22,6 +22,16 @@ ul {
     i {
         display: inline-block;
     }
+    .sprite-1 {
+        @include sprite-1;
+    }
+    .sprite-2 {
+        @include sprite-2;
+
+    }
+    .sprite-3 {
+        @include sprite-3;
+    }
     // @include sprites($spritesheet-sprites);
 }
 h1 s {
