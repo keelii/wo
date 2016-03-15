@@ -46,6 +46,17 @@ const defaults = {
     globalIgnore: ['!app/components/*/config.js'],
     watchIgnore: /\/maco\/|\/layout\/|config\.js|node_modules/,
 
+    uglify: {
+        mangle: {
+            except: ['define', 'require', 'module', 'exports']
+        }
+    },
+    cleanCSS: {},
+    pngquant: {
+        quality: '80-90',
+        speed: 4
+    },
+
     dest: 'build',
 
     server: {

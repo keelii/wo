@@ -18,6 +18,17 @@ module.exports = {
         ]
     },
 
+    uglify: {
+        mangle: {
+            except: ['define', 'require', 'module', 'exports']
+        }
+    },
+    cleanCSS: {},
+    pngquant: {
+        quality: '80-90',
+        speed: 4
+    },
+
     source: 'app',
     view: 'views',
     component: {

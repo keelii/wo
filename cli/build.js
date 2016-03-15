@@ -22,13 +22,10 @@ Processor.uglify = function (config, input, callback) {
     callback = callback || function() {};
     let source = input || config.scripts;
 
-    vfs.src(source, { base: config._SOURCE_ROOT})
-        .pipe(Uglify({
-            enabled: config._isPrd && !config._isDebug,
-            mangle: {
-                except: ['define', 'require', 'module', 'exports']
-            }
-        }))
+    config.uglify.enabled = config._isPrd && !config._isDebug;
+
+    vfs.src(source, { base: config._SOURCE_ROOT })
+        .pipe(Uglify(config.uglify))
         .pipe(banner({
             enabled: config._isPrd,
             template: config.banner
@@ -40,14 +37,14 @@ Processor.sass = function (config, input, callback) {
     callback = callback || function() {};
     let source = input || config.styles;
 
+    config.cleanCSS.enabled = config._isDebug ? false: config._isPrd;
+
     vfs.src(source, { base: config._SOURCE_ROOT})
         .pipe(Sass({
             config: config,
             debug: config._isDebug
         }))
-        .pipe(cleanCSS({
-            enabled: config._isDebug ? false: config._isPrd
-        }))
+        .pipe(cleanCSS(config.cleanCSS))
         .pipe(rebasePath({
             enabled: config._isPrd,
             base: config._SOURCE_ROOT,
@@ -75,7 +72,7 @@ Processor.imagemin = function (config, input, callback) {
     let source = input || config.images;
 
     vfs.src(source, {base: config._SOURCE_ROOT})
-        .pipe(pngquant({quality: '65-80', speed: 4})())
+        .pipe(pngquant(config.pngquant)())
         .pipe(vfs.dest(config._DEST_ROOT))
         .on('end', callback);
 };

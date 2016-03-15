@@ -71,6 +71,17 @@ describe('cli/', function() {
                 items: []
             },
 
+            uglify: {
+                mangle: {
+                    except: ['define', 'require', 'module', 'exports']
+                }
+            },
+            cleanCSS: {},
+            pngquant: {
+                quality: '80-90',
+                speed: 4
+            },
+
             component: {
                 dir: 'components',
                 config: 'config.js',
