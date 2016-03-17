@@ -117,6 +117,18 @@ describe('cli/', function() {
                 done();
             });
         });
+        it('should complie sass to css file without compressed.', function(done) {
+            config._isDev = true;
+            Processor.sass(config, 'test/src/test.sass.scss', function() {
+                let result = fs.readFileSync('test/result/test.sass.css', 'utf8');
+
+                assert.equal(
+                    'body {\n  text-align: center; }\n  body ul {\n    list-style: none; }',
+                    readFile('test/result/test.sass.css')
+                );
+                done();
+            });
+        });
         it('should complie nunjucks to html file', function(done) {
             Processor.nunjucks(config, 'test/src/test.nunjucks.html', function() {
                 assert.equal(

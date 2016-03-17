@@ -36,13 +36,14 @@ Processor.uglify = function (config, input, callback) {
 Processor.sass = function (config, input, callback) {
     callback = callback || function() {};
     let source = input || config.styles;
+    let nocompressed = config._isDebug || config._isDev;
 
-    config.cleanCSS.enabled = config._isDebug ? false: config._isPrd;
+    config.cleanCSS.enabled = nocompressed ? false: config._isPrd;
 
     vfs.src(source, { base: config._SOURCE_ROOT})
         .pipe(Sass({
             config: config,
-            debug: config._isDebug
+            debug: nocompressed
         }))
         .pipe(cleanCSS(config.cleanCSS))
         .pipe(rebasePath({
