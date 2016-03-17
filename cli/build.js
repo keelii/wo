@@ -31,7 +31,10 @@ Processor.uglify = function (config, input, callback) {
             template: config.banner
         }))
         .pipe(vfs.dest(config._DEST_ROOT))
-        .on('end', callback);
+        .on('end', function () {
+            console.timeEnd('uglify');
+            callback();
+        });
 };
 Processor.sass = function (config, input, callback) {
     callback = callback || function() {};
@@ -56,7 +59,10 @@ Processor.sass = function (config, input, callback) {
             template: config.banner
         }))
         .pipe(vfs.dest(config._DEST_ROOT))
-        .on('end', callback);
+        .on('end', function () {
+            console.timeEnd('sass');
+            callback();
+        });
 };
 Processor.nunjucks = function (config, input, callback) {
     callback = callback || function() {};
@@ -66,7 +72,10 @@ Processor.nunjucks = function (config, input, callback) {
         .pipe(Component(config))
         .pipe(Nunjucks(config))
         .pipe(vfs.dest(config._DEST_ROOT))
-        .on('end', callback);
+        .on('end',  function () {
+            console.timeEnd('nunjucks');
+            callback();
+        });
 };
 Processor.imagemin = function (config, input, callback) {
     callback = callback || function() {};
@@ -75,7 +84,10 @@ Processor.imagemin = function (config, input, callback) {
     vfs.src(source, {base: config._SOURCE_ROOT})
         .pipe(pngquant(config.pngquant)())
         .pipe(vfs.dest(config._DEST_ROOT))
-        .on('end', callback);
+        .on('end',  function () {
+            console.timeEnd('imagemin');
+            callback();
+        });
 };
 Processor.copy = function (config, input, callback) {
     callback = callback || function() {};
@@ -83,7 +95,10 @@ Processor.copy = function (config, input, callback) {
 
     vfs.src(source, {base: config._SOURCE_ROOT})
         .pipe(vfs.dest(config._DEST_ROOT))
-        .on('end', callback);
+        .on('end', function() {
+            console.timeEnd('copy');
+            callback();
+        });
 };
 
 function getSources(input, config) {
@@ -133,13 +148,19 @@ function build(config, input, callback) {
             s.copy = _.concat(s.uglify, config.assets, s.copy);
         }
 
+        console.time('uglify');
+        console.time('sass');
+        console.time('imagemin');
+        console.time('nunjucks');
+        console.time('copy');
+
         if (s.uglify.length && config._isPrd) {
             tasks.push(cb => Processor.uglify(config, s.uglify, cb));
         }
         if (s.sass.length) {
             tasks.push(cb => Processor.sass(config, s.sass, cb));
         }
-        if (s.imagemin.length) {
+        if (s.imagemin.length && config._isPrd) {
             tasks.push(cb => Processor.imagemin(config, s.imagemin, cb));
         }
         if (s.nunjucks.length) {
@@ -148,6 +169,9 @@ function build(config, input, callback) {
             }
         }
         if (s.copy.length) {
+            if (config._isDev) {
+                s.copy = _.concat(config.images, s.copy);
+            }
             tasks.push(cb => Processor.copy(config, s.copy, cb));
         }
         async.series(tasks, callback);
@@ -183,6 +207,7 @@ module.exports = function (config, input, callback) {
     if (cmd.imagemin) {
         return build(config, config.images[0], callback);
     }
+
     if (!input) {
         async.series([
             cb => Sprite(config, cb),
