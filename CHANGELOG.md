@@ -1,6 +1,10 @@
 ## Change Log
 
-### upcoming (2016/03/21 01:36 +00:00)
+### v0.0.18 (2016/03/21 11:31 +00:00)
+- [b8e1921](https://github.com/keelii/wo/commit/b8e1921b3564bd80b38c3b43fe97f4c27d0029a9) fix getGlobFile no return (@keelii)
+- [78aaaf9](https://github.com/keelii/wo/commit/78aaaf951224b6f54487f48c78fd9635fccd2b6d) 添加 --debug 统计打包任务时间 (@keelii)
+- [0249f6d](https://github.com/keelii/wo/commit/0249f6db6bfe8e0915b4582ab490c42a9c18073d) log time. (@keelii)
+- [d3acf44](https://github.com/keelii/wo/commit/d3acf4457b98d362011d6374772cba51e2fe279d) add ignore (@keelii)
 - [ec79313](https://github.com/keelii/wo/commit/ec7931317744824aeec68183386e066d9790e86e) add test case to dev nocompress sass. (@keelii)
 - [84aae96](https://github.com/keelii/wo/commit/84aae96dff37317740c75b42ff80196219a36c98) make cleanCSS, uglify, pngquant configurable. (@keelii)
 
