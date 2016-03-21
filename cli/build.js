@@ -105,10 +105,12 @@ function getSources (config, input) {
     };
 
     if (input) {
+        console.log(`>>>> ${input}`);
         if (utils.isDir(input)) {
             files = getGlobFiles(input + '/**', config);
         }
         if (utils.isGlob(input)) {
+            console.log('glob');
             files = getGlobFiles(input, config);
         }
         if (utils.isArray(input)) {
@@ -130,7 +132,7 @@ function getSources (config, input) {
 }
 
 function getGlobFiles(glob, config) {
-    globby.sync(_.concat(glob, config.globalIgnore), { nodir: true });
+    return globby.sync([glob].concat(config.globalIgnore), { nodir: true });
 }
 
 function build(config, input, callback) {
