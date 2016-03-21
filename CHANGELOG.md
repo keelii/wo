@@ -1,0 +1,70 @@
+## Change Log
+
+### upcoming (2016/03/21 01:36 +00:00)
+- [ec79313](https://github.com/keelii/wo/commit/ec7931317744824aeec68183386e066d9790e86e) add test case to dev nocompress sass. (@keelii)
+- [84aae96](https://github.com/keelii/wo/commit/84aae96dff37317740c75b42ff80196219a36c98) make cleanCSS, uglify, pngquant configurable. (@keelii)
+
+### v0.0.16 (2016/03/13 10:42 +00:00)
+- [56dc34a](https://github.com/keelii/wo/commit/56dc34a391f7bbc6fee675d92fcaa9d7d8b91da7) fix badge (@keelii)
+
+### v0.0.15 (2016/03/13 10:39 +00:00)
+- [7d90b79](https://github.com/keelii/wo/commit/7d90b79d85a038a6ce4a43499e3c90d067ca4696) add dependencies badge (@keelii)
+- [ee10f0e](https://github.com/keelii/wo/commit/ee10f0e4fe1ca228537bed5cab494fa8bc0401fa) sass import 的文件更新自动触发原文件编译 (@keelii)
+
+### v0.0.13 (2016/03/06 11:29 +00:00)
+- [54f9e56](https://github.com/keelii/wo/commit/54f9e56d2770963167a7196ee8761bc5b5ff2afd) add release command together with git workflow (@keelii)
+- [c9f34f8](https://github.com/keelii/wo/commit/c9f34f8b9a541b62e1c673cb5694876887d624cf) TODO1 (@keelii)
+- [079ea19](https://github.com/keelii/wo/commit/079ea19993ca6ab762045d092ea674e0f9b2daa1) 添加了生产环境文件头信息 (@keelii)
+
+### v0.0.12 (2016/03/01 13:02 +00:00)
+- [0372584](https://github.com/keelii/wo/commit/03725845650e2b0d3d739285f4b439b480d2bb0c) 添加了 --debug 参数 (@keelii)
+- [08ab765](https://github.com/keelii/wo/commit/08ab76551b4c5fb79500d04ebf6e7b9ea7c5c1bf) 修复了开发环境压缩脚本的问题1 (@keelii)
+
+### v0.0.10 (2016/02/27 10:50 +00:00)
+- [b1818e8](https://github.com/keelii/wo/commit/b1818e84a89e904d5b83966287d72e729e5bc5db) 修复了多个 sprite 拼合的问题。 (@keelii)
+
+### v0.0.9 (2016/02/26 09:10 +00:00)
+- [438ba09](https://github.com/keelii/wo/commit/438ba0900111cbfdde183d1ffd654998225e58dd) add clean css (@keelii)
+
+### v0.0.8 (2016/02/26 01:12 +00:00)
+- [7d97531](https://github.com/keelii/wo/commit/7d97531585eff375acb00a777adbd98f803f92d0) fix gen callback null (@keelii)
+
+### v0.0.7 (2016/02/25 03:06 +00:00)
+- [3cf076c](https://github.com/keelii/wo/commit/3cf076c9c99525400801bb94081dc4da12c3959f) fix signle file no callback. (@keelii)
+
+### v0.0.6 (2016/02/24 14:07 +00:00)
+- [f3b411e](https://github.com/keelii/wo/commit/f3b411e224e3395c185859155fe3febce7f265bc) add more testcases (@keelii)
+- [68ddbf9](https://github.com/keelii/wo/commit/68ddbf9a2dd78e822a8d39b05f3bb26328a9776e) fix deploy. rebaseUrl (@keelii)
+- [47b7be3](https://github.com/keelii/wo/commit/47b7be320b86bceccbced33ff6d817517a1e6dd4) update readme file (@keelii)
+
+### v0.0.5 (2016/02/24 01:28 +00:00)
+- [76ff91b](https://github.com/keelii/wo/commit/76ff91bdd6c9c39ec6995dadf6127804631c0d4e) add generate module (@keelii)
+- [1b9c4cc](https://github.com/keelii/wo/commit/1b9c4ccbb8fba8028c9dbc27762f72b5f5e86701) add gen,pngq. (@keelii)
+
+### v0.0.4 (2016/02/23 05:54 +00:00)
+- [83d909b](https://github.com/keelii/wo/commit/83d909b1dcc4bf49e01a7bdb6f5e490ee0c973d2) trim space char. (@keelii)
+- [4b30612](https://github.com/keelii/wo/commit/4b30612ece8fe18dba3efafa09a5d0d154fe9f89) make testcase testable. (@keelii)
+- [6f56d56](https://github.com/keelii/wo/commit/6f56d564f1c3cc0b701b171f29a5ca9457160229) make testcase testable. (@keelii)
+- [5bf5e25](https://github.com/keelii/wo/commit/5bf5e25da4aa5480d8009f82f336d6e1aac87b9a) update version NO. to publish. (@keelii)
+- [3707413](https://github.com/keelii/wo/commit/3707413e817a330cfad988d9cdbf47570b5a3e3c) change test port (@keelii)
+- [89acf84](https://github.com/keelii/wo/commit/89acf84495e36360ad5e60b7fdf6f4c613584c3b) add test file. (@keelii)
+- [ecc38b7](https://github.com/keelii/wo/commit/ecc38b7f0386c03c03c4c3a12f45d66135c8a52d) update static-http-server (@keelii)
+- [69d20f4](https://github.com/keelii/wo/commit/69d20f4141853a5c72ce70c0eebcb50e096de851) fix callback (@keelii)
+- [980923f](https://github.com/keelii/wo/commit/980923f3dc1e84e7705ae066d135f16429fcf42e) looks nice (@keelii)
+- [dff9f8c](https://github.com/keelii/wo/commit/dff9f8cca2051522de6f2b0a868ea3efa1ba31cb) add cover. (@keelii)
+- [bb9065f](https://github.com/keelii/wo/commit/bb9065ff0d0f6a84df918c594f9cd8c90b835535) add codecov. (@keelii)
+- [815dff3](https://github.com/keelii/wo/commit/815dff34e10d44cbc6ec5de406f2d0a7296bfd6a) publish 0.0.0 (@keelii)
+- [1aade97](https://github.com/keelii/wo/commit/1aade97a8a9e9166afe62d985100688427486f80) fix header (@keelii)
+- [624cf7b](https://github.com/keelii/wo/commit/624cf7bfc863d844e6874a23849526593e168336) add travis ci (@keelii)
+- [7430934](https://github.com/keelii/wo/commit/7430934e85916c99c53f4010d3bf4747301ccc59) add README.md (@keelii)
+- [146c6e8](https://github.com/keelii/wo/commit/146c6e8ffa586112278150ae9139ada830ca1a4a) add README.md (@keelii)
+- [3225c17](https://github.com/keelii/wo/commit/3225c17646d59ae4514877fd82002b6a75797cbe) Prepublish. (@keelii)
+- [05be6c0](https://github.com/keelii/wo/commit/05be6c052eb22c3addcbfcafd247a02ccd4b095c) prepublish. (@keelii)
+- [06cc7c7](https://github.com/keelii/wo/commit/06cc7c7c6ff1e342542a145d1aee0702ef0a42e6) deploy seq. (@keelii)
+- [7ba654b](https://github.com/keelii/wo/commit/7ba654be9ec8ddde11f89d1e7e86c045f076efae) fs (@keelii)
+- [d5bf709](https://github.com/keelii/wo/commit/d5bf709a1e8e4214078cd46c10487ca13c2176fb) add deploy. (@keelii)
+- [fa0dc8a](https://github.com/keelii/wo/commit/fa0dc8accb953bec7576e59a43547672c3414b5c) sprite config. (@keelii)
+- [9038d2a](https://github.com/keelii/wo/commit/9038d2a330329aca06dc8406c06843e05894e265) add sprite support. (@keelii)
+- [667c543](https://github.com/keelii/wo/commit/667c543a4a15ff180d9fc4487b80817a6f1e7331) . (@keelii)
+- [e5af0e5](https://github.com/keelii/wo/commit/e5af0e5697aa1eb81d249ce6d8e2ccfc1b0481ca) inited. (@keelii)
+- [869f265](https://github.com/keelii/wo/commit/869f2654e027c1e8f17a0197718304a4d5faf98a) init a new wow (@keelii)
