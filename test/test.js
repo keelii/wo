@@ -287,12 +287,41 @@ describe('lib/', function() {
                 assert.equal(true, utils.isDataUri('data:image/png;base64,iVBORw0KG'));
             });
         });
+        describe('#isArray()', function () {
+            it('should return true', function () {
+                assert.equal(true, utils.isArray([]));
+                assert.equal(true, utils.isArray([1,2,3]));
+                assert.equal(false, utils.isArray(null));
+                assert.equal(false, utils.isArray(1));
+                assert.equal(false, utils.isArray(true));
+            });
+        });
+        describe('#isGlob()', function () {
+            it('should return true', function () {
+                assert.equal(true, utils.isGlob('app/*.js'));
+                assert.equal(true, utils.isGlob('!app/**/b.js'));
+                assert.equal(false, utils.isGlob('app/path/to/file.js'));
+                assert.equal(false, utils.isGlob(1));
+                assert.equal(false, utils.isGlob(true));
+            });
+        });
         describe('#getTag()', function () {
             it('should a script tag', function () {
                 assert.equal('<script src="{{source}}"></script>', utils.getTag('script'));
             });
             it('should a div tag', function () {
                 assert.equal('<div></div>', utils.getTag('div'));
+            });
+        });
+        describe('#fileName()', function () {
+            it('should return filename', function () {
+                assert.equal('file.js', utils.fileName('path/to/file.js'));
+                assert.equal('file', utils.fileName('path/to/file'));
+            });
+        });
+        describe('#relativeDir()', function () {
+            it('should return filename', function () {
+                assert.equal(path.normalize('test/test.js'), utils.relativeDir(__filename));
             });
         });
         describe('#isFile()', function () {

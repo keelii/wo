@@ -1,5 +1,8 @@
 ## Change Log
 
+### upcoming (2016/03/22 05:08 +00:00)
+- [430563b](https://github.com/keelii/wo/commit/430563b59c39717ad33628c4b45bb5309ec6244a) update changelog (@keelii)
+
 ### v0.0.18 (2016/03/21 11:31 +00:00)
 - [b8e1921](https://github.com/keelii/wo/commit/b8e1921b3564bd80b38c3b43fe97f4c27d0029a9) fix getGlobFile no return (@keelii)
 - [78aaaf9](https://github.com/keelii/wo/commit/78aaaf951224b6f54487f48c78fd9635fccd2b6d) 添加 --debug 统计打包任务时间 (@keelii)
