@@ -105,12 +105,10 @@ function getSources (config, input) {
     };
 
     if (input) {
-        console.log(`>>>> ${input}`);
         if (utils.isDir(input)) {
             files = getGlobFiles(input + '/**', config);
         }
         if (utils.isGlob(input)) {
-            console.log('glob');
             files = getGlobFiles(input, config);
         }
         if (utils.isArray(input)) {
