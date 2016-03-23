@@ -111,6 +111,7 @@ function addRuntimeVal(arg, configPath) {
 
     // Debug mode
     options._isDebug = options._arg.debug;
+    options._showLog = options._arg.log;
     // Force mode
     options._isForce = options._arg.force;
 

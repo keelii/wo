@@ -3,12 +3,28 @@ const chokidar = require('chokidar');
 const shs = require('static-http-server');
 const build = require('./build');
 
+const chalk = require('chalk');
 const async = require('async');
 const _ = require('lodash');
 const utils = require('../lib/utils');
 
+function colorType(str) {
+    switch(str) {
+        case 'CHANGE':
+            return chalk.green(str);
+        case 'ADD':
+            return chalk.yellow('---' + str);
+        case 'UNLINK':
+            return chalk.red(str);
+        case 'UNLINKDIR':
+            return chalk.red(str);
+        default:
+            return chalk.gray(str);
+    };
+}
+
 function log(e, rPath) {
-    console.log('[%s] => %s', e.toUpperCase(), utils.relativeDir(rPath));
+    console.log('[%s] => %s', colorType(e.toUpperCase()), colorType(utils.relativeDir(rPath)));
 }
 
 function server(config, callback) {
@@ -21,25 +37,30 @@ function server(config, callback) {
     }, callback);
 }
 
+function handleWatchEvent(callback) {
+    return function(event, path) {
+        log(event, path);
+        if (event !== 'unlink' && utils.isNormalFile(path)) {
+            callback(path);
+        }
+    };
+}
+
 function watch(config, callback){
     callback = callback || function() {};
-
-    var targets = _.concat();
 
     config.watcher = chokidar.watch(config._SOURCE_ROOT, {
         ignored: config.watchIgnore,
         ignoreInitial: true
-    }).on('all', (event, path) => {
-        log(event, path);
+    }).on('all', handleWatchEvent(function (path) {
         build(config, path);
-    });
+    }));
 
     chokidar.watch(config.templateRefs, {
         ignoreInitial: true
-    }).on('all', (event, path) => {
-        log(event, path);
+    }).on('all', handleWatchEvent(function () {
         build(config, config.templates[0]);
-    });
+    }));
 
     callback(null);
 }
@@ -59,10 +80,9 @@ function watchRefs(config) {
         chokidar.watch(tar, {
             ignored: config.watchIgnore,
             ignoreInitial: true
-        }).on('all', (event, path) => {
-            log(event, path);
+        }).on('all', handleWatchEvent(function () {
             build(config, des.concat(tar));
-        });
+        }));
     }
 
     for ( var key in result ) {

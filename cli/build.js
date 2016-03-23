@@ -87,7 +87,7 @@ Processor.copy = function (config, input, callback) {
 
 function handleCallback(name, config, callback) {
     return function() {
-        if (config._isDebug) {
+        if (config._showLog) {
             console.timeEnd(name);
         }
         callback();
@@ -135,6 +135,9 @@ function getGlobFiles(glob, config) {
 
 function build(config, input, callback) {
     if (utils.isFile(input)) {
+        if (!utils.isNormalFile(input)) {
+            return callback();
+        }
         return Processor[utils.getProcessor(input)](config, input, callback);
     }
 
@@ -146,7 +149,7 @@ function build(config, input, callback) {
         s.copy = _.concat(config.scripts, config.images, config.assets, s.copy);
     }
 
-    if (config._isDebug) {
+    if (config._showLog) {
         console.time('uglify');
         console.time('sass');
         console.time('imagemin');
