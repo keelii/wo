@@ -1,6 +1,11 @@
 ## Change Log
 
-### upcoming (2016/03/22 05:08 +00:00)
+### v0.0.20 (2016/03/25 09:43 +00:00)
+- [cd8b13c](https://github.com/keelii/wo/commit/cd8b13cc8e74d0838a04580e763ff8a690e1a085) update nunjucks (@keelii)
+- [3ef316b](https://github.com/keelii/wo/commit/3ef316b879630cf00f935207494bc65dc7ec1b9d) 添加了log颜色 (@keelii)
+- [752a956](https://github.com/keelii/wo/commit/752a9569a3598616028a21713dbe2e5a86658531) add test cases. (@keelii)
+
+### v0.0.19 (2016/03/22 05:06 +00:00)
 - [430563b](https://github.com/keelii/wo/commit/430563b59c39717ad33628c4b45bb5309ec6244a) update changelog (@keelii)
 
 ### v0.0.18 (2016/03/21 11:31 +00:00)
