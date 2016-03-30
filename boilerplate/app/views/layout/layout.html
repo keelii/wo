@@ -11,6 +11,9 @@
 </head>
 <body>
 
+    {% setGlobal global_foo="test foo", global_bar="test bar" %}
+    {% setGlobal global_num=1024 %}
+
     {% block body %} {% endblock %}
 
     {% block script %}
