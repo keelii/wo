@@ -325,16 +325,19 @@ describe('lib/', function() {
             });
         });
         describe('#isFile()', function () {
-            it('should return false', function () {
-                assert.equal(
-                    false,
-                    utils.isFile('wrong file'));
+            it('should not a file', function () {
+                assert.equal(false, utils.isFile('wrong file'));
             });
-            it('should return true', function () {
-                assert.equal(
-                    true,
-                    utils.isFile(__filename));
+            it('should a file', function () {
+                assert.equal(true, utils.isFile(__filename));
             })
+        });
+        describe('#isNormalFile()', function () {
+            it('should a normal file', function () {
+                assert.equal(false, utils.isFile('wrong file'));
+                assert.equal(false, utils.isFile('path.js'));
+                assert.equal(false, utils.isFile('file.bak'));
+            });
         });
         describe('#isDir()', function () {
             it('should return false', function () {

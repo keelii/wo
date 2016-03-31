@@ -14,6 +14,8 @@ function colorType(str) {
             return chalk.green(str);
         case 'ADD':
             return chalk.yellow('---' + str);
+        case 'ADDDIR':
+            return chalk.yellow('---' + str);
         case 'UNLINK':
             return chalk.red(str);
         case 'UNLINKDIR':
