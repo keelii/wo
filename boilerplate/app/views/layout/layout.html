@@ -9,7 +9,10 @@
         {{ Tag('link', '/components/main/main.css') }}
     {% endblock %}
 </head>
-<body>
+<body class="{{ global_bar }}">
+
+    {% setGlobal global_foo="test foo", global_bar="test bar" %}
+    {% setGlobal global_num=1024 %}
 
     {% block body %} {% endblock %}
 
