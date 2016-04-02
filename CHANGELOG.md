@@ -1,5 +1,16 @@
 ## Change Log
 
+### upcoming (2016/04/02 07:28 +00:00)
+- [e70be97](https://github.com/keelii/wo/commit/e70be97a0c8d3980c81e99d803ae20787384b8a4) logo add backspace (@keelii)
+
+### v0.0.22 (2016/03/31 01:21 +00:00)
+- [e7f338c](https://github.com/keelii/wo/commit/e7f338c05b5ce62f8c9882f5a5797426906e5141) Merge branch 'master' of github.com:keelii/wo (@keelii)
+- [6b586a5](https://github.com/keelii/wo/commit/6b586a50d295a357708cf5709e5bcf59a0504c3e) add test case (@keelii)
+
+### v0.0.21 (2016/03/30 15:22 +00:00)
+- [42df2e9](https://github.com/keelii/wo/commit/42df2e9dd4184fe2fc8ba5f7b5a1e4afc6af6c38) 升级 nunjucks (@keelii)
+- [94b4c6c](https://github.com/keelii/wo/commit/94b4c6c517adad3217ed6d51e9af77187611cf67) new version 0.0.20 (@keelii)
+
 ### v0.0.20 (2016/03/25 09:43 +00:00)
 - [cd8b13c](https://github.com/keelii/wo/commit/cd8b13cc8e74d0838a04580e763ff8a690e1a085) update nunjucks (@keelii)
 - [3ef316b](https://github.com/keelii/wo/commit/3ef316b879630cf00f935207494bc65dc7ec1b9d) 添加了log颜色 (@keelii)
