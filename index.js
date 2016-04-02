@@ -37,7 +37,8 @@ const logo = `
 ┬ ┬╔═╗╔═╗╔═╗
 │││║ ║║ ║║ ║
 └┴┘╚═╝╚═╝╚═╝
--------${pkg.version}`;
+-------${pkg.version}
+`;
 
 if (argv.h) {
     return console.log(help);
