@@ -1,5 +1,6 @@
 'use strict';
 const vfs = require('vinyl-fs');
+const path = require('path');
 const Uglify = require('../lib/uglify');
 const Sass = require('../lib/sass');
 const Nunjucks = require('../lib/nunjucks');
@@ -15,6 +16,7 @@ const async = require('async');
 const globby = require('globby');
 const _ = require('lodash');
 const utils = require('../lib/utils');
+const chalk = require('chalk');
 
 let Processor = {};
 Processor.uglify = function (config, input, callback) {
@@ -95,7 +97,7 @@ function handleCallback(name, config, callback) {
 }
 
 function getSources (config, input) {
-    let files = null;
+    let files = null, targets = null;
     let sources = {
         uglify: [],
         sass: [],
@@ -106,16 +108,31 @@ function getSources (config, input) {
 
     if (input) {
         if (utils.isDir(input)) {
-            files = getGlobFiles(input + '/**', config);
+            targets = path.join(input, '/**');
+            files = getGlobFiles(targets, config);
         }
         if (utils.isGlob(input)) {
+            targets = input;
             files = getGlobFiles(input, config);
         }
+        // for watch task
         if (utils.isArray(input)) {
+            targets = input.join(',');
             files = input;
         }
-
-        files.forEach(f => sources[utils.getProcessor(f)].push(f));
+        if (utils.hasDir(input, config._COMPONENT_ROOT)) {
+            targets = path.join(config._COMPONENT_ROOT, input, '/*');
+            files = getGlobFiles(targets, config);
+        }
+        
+        if (files) {
+            if (!config.nolog) {
+                console.log(`Targets [${chalk.green(utils.relativeDir(targets))}] will be processing...`);
+            }
+            files.forEach(f => sources[utils.getProcessor(f)].push(f));
+        } else {
+            console.error(`Targets [${chalk.red(input)}] not found.`);
+        }
     } else {
         sources = {
             uglify  : config.scripts.concat(config.globalIgnore),

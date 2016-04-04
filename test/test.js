@@ -207,13 +207,6 @@ describe('cli/', function() {
         });
     });
 
-    //describe('Release', function() {
-        //const release = require('../cli/release');
-        //it('should return a string.', function () {
-        //    assert.equal('to be done.', release());
-        //});
-    //});
-
     describe('Gen', function () {
         let settings = require('../default')(argv, __dirname);
         const gen = require('../cli/gen');
@@ -334,21 +327,28 @@ describe('lib/', function() {
         });
         describe('#isNormalFile()', function () {
             it('should a normal file', function () {
+                assert.equal(true, utils.isFile(__filename));
+            });
+            it('should not be a normal file', function () {
                 assert.equal(false, utils.isFile('wrong file'));
                 assert.equal(false, utils.isFile('path.js'));
                 assert.equal(false, utils.isFile('file.bak'));
             });
         });
+        describe('#hasDir()', function () {
+            it('should has dirs', function () {
+                assert.equal(true, utils.hasDir('app', __dirname));
+            });
+            it('should has no dirs', function () {
+                assert.equal(false, utils.hasDir('index', __dirname));
+            });
+        });
         describe('#isDir()', function () {
             it('should return false', function () {
-                assert.equal(
-                    false,
-                    utils.isDir('wrong file'));
+                assert.equal(false, utils.isDir('wrong file'));
             });
             it('should return true', function () {
-                assert.equal(
-                    true,
-                    utils.isDir(__dirname));
+                assert.equal(true, utils.isDir(__dirname));
             })
         });
     });
