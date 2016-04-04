@@ -20,7 +20,7 @@ module.exports = function (config, pName, callback) {
             }
 
             if (!config.nolog) {
-                console.log('Project [%s] has created. take look:\n ', pName);
+                console.log('\nProject [%s] has created. take look:\n ', pName);
                 console.log(chalk.green(`  $ cd ${pName} && wo start`));
             }
             callback(null);

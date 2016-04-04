@@ -1,10 +1,16 @@
 ## Change Log
 
-### upcoming (2016/04/04 08:05 +00:00)
+### upcoming (2016/04/04 09:20 +00:00)
+- [f6c397b](https://github.com/keelii/wo/commit/f6c397b225b95ce7d6002db1ae1c4d069d4161e5) 添加了直接匹配组件文件夹目录： (@keelii)
+
+### v0.0.24 (2016/04/04 08:04 +00:00)
+- [795a2f8](https://github.com/keelii/wo/commit/795a2f85a7a1a81c0ea746a6da2190773232e762) 添加了直接匹配组件文件夹目录： (@keelii)
 - [8988c9b](https://github.com/keelii/wo/commit/8988c9bf58f8e41e63e8a2abe917f06b1709f242) add --help to cli. (@keelii)
 
 ### v0.0.23 (2016/04/02 07:21 +00:00)
 - [e70be97](https://github.com/keelii/wo/commit/e70be97a0c8d3980c81e99d803ae20787384b8a4) logo add backspace (@keelii)
+- [b2c5b91](https://github.com/keelii/wo/commit/b2c5b9195d6535fcde93108cb0773240b076bd83) remove --- (@keelii)
+- [37ff972](https://github.com/keelii/wo/commit/37ff972ec9e4cd405d8ab605531682e2c49261fc) Merge branch 'master' of github.com:keelii/wo (@keelii)
 
 ### v0.0.22 (2016/03/31 01:21 +00:00)
 - [e7f338c](https://github.com/keelii/wo/commit/e7f338c05b5ce62f8c9882f5a5797426906e5141) Merge branch 'master' of github.com:keelii/wo (@keelii)

@@ -20,6 +20,7 @@ command:
 input:
   path/to/dir
   glob/pattern/**
+  name_to_component
   path/to/file.ext
 
 options:

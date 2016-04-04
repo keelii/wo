@@ -37,6 +37,7 @@ input:
   path/to/dir
   glob/pattern/**
   path/to/file.ext
+  name_to_component
   gen_project_name
 
 options:
