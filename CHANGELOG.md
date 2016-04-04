@@ -1,5 +1,8 @@
 ## Change Log
 
+### upcoming (2016/04/02 07:28 +00:00)
+- [e70be97](https://github.com/keelii/wo/commit/e70be97a0c8d3980c81e99d803ae20787384b8a4) logo add backspace (@keelii)
+
 ### v0.0.22 (2016/03/31 01:21 +00:00)
 - [e7f338c](https://github.com/keelii/wo/commit/e7f338c05b5ce62f8c9882f5a5797426906e5141) Merge branch 'master' of github.com:keelii/wo (@keelii)
 - [6b586a5](https://github.com/keelii/wo/commit/6b586a50d295a357708cf5709e5bcf59a0504c3e) add test case (@keelii)
