@@ -66,3 +66,7 @@ options:
     "gen": "node ./node_modules/wooo gen"
 }
 ```
+
+## Documention
+
+[wiki](https://github.com/keelii/wo/wiki)
