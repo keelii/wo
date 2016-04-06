@@ -123,12 +123,13 @@ function getSources (config, input) {
         if (utils.hasDir(input, config._COMPONENT_ROOT)) {
             targets = path.join(config._COMPONENT_ROOT, input, '/*');
             files = getGlobFiles(targets, config);
-        }
-        
-        if (files) {
+
             if (!config.nolog) {
                 console.log(`Targets [${chalk.green(utils.relativeDir(targets))}] will be processing...`);
             }
+        }
+        
+        if (files) {
             files.forEach(f => sources[utils.getProcessor(f)].push(f));
         } else {
             console.error(`Targets [${chalk.red(input)}] not found.`);
