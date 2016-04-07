@@ -106,6 +106,12 @@ function getSources (config, input) {
         copy: []
     };
 
+    function logTarget(text) {
+        if (!config.nolog) {
+            console.log(`Targets [${chalk.green(text)}] will be processing...`);
+        }
+    }
+
     if (input) {
         if (utils.isDir(input)) {
             targets = path.join(input, '/**');
@@ -120,13 +126,22 @@ function getSources (config, input) {
             targets = input.join(',');
             files = input;
         }
+        // wo build component_name1,component_name2
+        if (utils.isMultiTarget(input)) {
+            targets = input.split(',')
+                .filter(inp => utils.hasDir(inp, config._COMPONENT_ROOT))
+                .map(inp => path.join(config._COMPONENT_ROOT, inp, '/*'));
+
+            files = getGlobFiles(targets, config);
+
+            logTarget(targets.map(t => utils.relativeDir(t)).join(','));
+        }
+        // wo build component_name
         if (utils.hasDir(input, config._COMPONENT_ROOT)) {
             targets = path.join(config._COMPONENT_ROOT, input, '/*');
             files = getGlobFiles(targets, config);
 
-            if (!config.nolog) {
-                console.log(`Targets [${chalk.green(utils.relativeDir(targets))}] will be processing...`);
-            }
+            logTarget(utils.relativeDir(targets));
         }
         
         if (files) {
@@ -148,7 +163,15 @@ function getSources (config, input) {
 }
 
 function getGlobFiles(glob, config) {
-    return globby.sync([glob].concat(config.globalIgnore), { nodir: true });
+    var globs = [];
+
+    if (utils.isArray(glob)) {
+        globs = glob.concat(config.globalIgnore);
+    }
+    if (typeof glob === 'string') {
+        globs = [glob].concat(config.globalIgnore);
+    }
+    return globby.sync(globs, { nodir: true });
 }
 
 function build(config, input, callback) {

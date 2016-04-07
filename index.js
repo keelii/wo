@@ -20,8 +20,10 @@ command:
 input:
   path/to/dir
   glob/pattern/**
-  name_to_component
   path/to/file.ext
+  component_name
+  component_name1,component_name2
+  gen_project_name
 
 options:
   --sprite      ${chalk.gray('- concat sprites to one image and generate a style file')}

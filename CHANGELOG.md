@@ -1,6 +1,9 @@
 ## Change Log
 
-### upcoming (2016/04/04 09:20 +00:00)
+### upcoming (2016/04/07 14:24 +00:00)
+- [5896ca6](https://github.com/keelii/wo/commit/5896ca6671f5b19b8e876530a398f20c897bafb8) Targets log only in dir match (@keelii)
+- [2aebf29](https://github.com/keelii/wo/commit/2aebf29d5d5d25f634753111fc71ccbae26e03a9) add document link (@keelii)
+- [82d380b](https://github.com/keelii/wo/commit/82d380b9cb2246ea20278fb0277d57e7663c781c) update readme (@keelii)
 - [f6c397b](https://github.com/keelii/wo/commit/f6c397b225b95ce7d6002db1ae1c4d069d4161e5) 添加了直接匹配组件文件夹目录： (@keelii)
 
 ### v0.0.24 (2016/04/04 08:04 +00:00)
