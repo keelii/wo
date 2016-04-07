@@ -28,7 +28,7 @@ Usage: wo <command> <input> <options>
 command:
   build     - clear && build all source files to dest
   deploy    - build && upload to ftp server
-  release   - build && taged git source
+  release   - build && taged git source - (Experimental)
   start     - build && start a local server with default root [.www]
   clear     - by default, rm -rf build .www
   gen       - generate a new demo project
@@ -37,7 +37,8 @@ input:
   path/to/dir
   glob/pattern/**
   path/to/file.ext
-  name_to_component
+  component_name
+  component_name1,component_name2
   gen_project_name
 
 options:
