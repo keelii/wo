@@ -17,7 +17,7 @@
   },
   "scripts": {
     "cover": "istanbul cover ./node_modules/mocha/bin/_mocha -- -R spec && ./node_modules/.bin/codecov",
-    "test": "./node_modules/.bin/mocha ./test/test.js --reporter spec",
+    "test": "./node_modules/.bin/mocha ./test/ --reporter spec",
     "changelog": "github-changes -o keelii -r wo"
   },
   "repository": {

@@ -137,7 +137,7 @@ function addRuntimeVal(arg, configPath) {
     options._components = {};
     options._sass = {};
 
-    return options;
+    return _.defaultsDeep({}, options);
 }
 
 module.exports = addRuntimeVal;

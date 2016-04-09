@@ -1,100 +1,14 @@
 'use strict';
-const vfs = require('vinyl-fs');
 const path = require('path');
-const Uglify = require('../lib/uglify');
-const Sass = require('../lib/sass');
-const Nunjucks = require('../lib/nunjucks');
-const Component = require('../lib/component');
-const Sprite = require('../lib/sprite');
-const pngquant = require('../lib/pngquant');
-const rebasePath = require('../lib/rebasePath');
-const cleanCSS = require('../lib/cleanCSS');
-const banner = require('../lib/banner');
 
 const fse = require('fs-extra');
 const async = require('async');
 const globby = require('globby');
+const Processor = require('../lib/index');
+
 const _ = require('lodash');
 const utils = require('../lib/utils');
 const chalk = require('chalk');
-
-let Processor = {};
-Processor.uglify = function (config, input, callback) {
-    callback = callback || function() {};
-    let source = input || config.scripts;
-
-    config.uglify.enabled = config._isPrd && !config._isDebug;
-
-    vfs.src(source, { base: config._SOURCE_ROOT })
-        .pipe(Uglify(config.uglify))
-        .pipe(banner({
-            enabled: config._isPrd,
-            template: config.banner
-        }))
-        .pipe(vfs.dest(config._DEST_ROOT))
-        .on('end', handleCallback('uglify', config, callback));
-};
-Processor.sass = function (config, input, callback) {
-    callback = callback || function() {};
-    let source = input || config.styles;
-    let nocompressed = config._isDebug || config._isDev;
-
-    config.cleanCSS.enabled = nocompressed ? false: config._isPrd;
-
-    vfs.src(source, { base: config._SOURCE_ROOT})
-        .pipe(Sass({
-            config: config,
-            debug: nocompressed
-        }))
-        .pipe(cleanCSS(config.cleanCSS))
-        .pipe(rebasePath({
-            enabled: config._isPrd,
-            base: config._SOURCE_ROOT,
-            prefix: config.production + utils.dirToPath(config._PRD_PREFIX)
-        }))
-        .pipe(banner({
-            enabled: config._isPrd,
-            template: config.banner
-        }))
-        .pipe(vfs.dest(config._DEST_ROOT))
-        .on('end', handleCallback('sass', config, callback));
-};
-Processor.nunjucks = function (config, input, callback) {
-    callback = callback || function() {};
-    let source = input || config.templates;
-
-    vfs.src(source, { base: config._SOURCE_ROOT})
-        .pipe(Component(config))
-        .pipe(Nunjucks(config))
-        .pipe(vfs.dest(config._DEST_ROOT))
-        .on('end', handleCallback('nunjucks', config, callback));
-};
-Processor.imagemin = function (config, input, callback) {
-    callback = callback || function() {};
-    let source = input || config.images;
-
-    vfs.src(source, {base: config._SOURCE_ROOT})
-        .pipe(pngquant(config.pngquant)())
-        .pipe(vfs.dest(config._DEST_ROOT))
-        .on('end', handleCallback('imagemin', config, callback));
-};
-Processor.copy = function (config, input, callback) {
-    callback = callback || function() {};
-    let source = input || config.assets;
-
-    vfs.src(source, {base: config._SOURCE_ROOT})
-        .pipe(vfs.dest(config._DEST_ROOT))
-        .on('end', handleCallback('copy', config, callback));
-};
-
-function handleCallback(name, config, callback) {
-    return function() {
-        if (config._showLog) {
-            console.timeEnd(name);
-        }
-        callback();
-    };
-}
 
 function getSources (config, input) {
     let files = null, targets = null;
@@ -147,7 +61,7 @@ function getSources (config, input) {
         if (files) {
             files.forEach(f => sources[utils.getProcessor(f)].push(f));
         } else {
-            console.error(`Targets [${chalk.red(input)}] not found.`);
+            throw new Error(`Targets [${chalk.red(input)}] not found.`);
         }
     } else {
         sources = {
@@ -175,6 +89,14 @@ function getGlobFiles(glob, config) {
 }
 
 function build(config, input, callback) {
+    if (config._showLog) {
+        console.time('uglify');
+        console.time('sass');
+        console.time('imagemin');
+        console.time('nunjucks');
+        console.time('copy');
+    }
+
     if (utils.isFile(input)) {
         if (!utils.isNormalFile(input)) {
             return callback();
@@ -190,14 +112,6 @@ function build(config, input, callback) {
         s.copy = _.concat(config.scripts, config.images, config.assets, s.copy);
     }
 
-    if (config._showLog) {
-        console.time('uglify');
-        console.time('sass');
-        console.time('imagemin');
-        console.time('nunjucks');
-        console.time('copy');
-    }
-
     if (s.uglify.length && config._isPrd) {
         tasks.push(cb => Processor.uglify(config, s.uglify, cb));
     }
@@ -208,7 +122,7 @@ function build(config, input, callback) {
         tasks.push(cb => Processor.imagemin(config, s.imagemin, cb));
     }
     if (s.nunjucks.length) {
-        if (config._arg.nunjucks || config._isDev) {
+        if (config._arg.nunjucks) {
             tasks.push(cb => Processor.nunjucks(config, s.nunjucks, cb));
         }
     }
@@ -228,7 +142,7 @@ module.exports = function (config, input, callback) {
 
     // build --sprite
     if (cmd.sprite) {
-        return Sprite(config, callback);
+        return Processor.sprite(config, callback);
     }
 
     // build --nunjucks
@@ -247,5 +161,7 @@ module.exports = function (config, input, callback) {
 
     build(config, input, callback);
 };
+module.exports.build = build;
+module.exports.getSources = getSources;
+module.exports.getGlobFiles = getGlobFiles;
 
-module.exports.Processor = Processor;
