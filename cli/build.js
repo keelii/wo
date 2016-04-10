@@ -59,7 +59,9 @@ function getSources (config, input) {
         }
         
         if (files) {
-            files.forEach(f => sources[utils.getProcessor(f)].push(f));
+            // exinclude component config
+            files.filter(f => f.indexOf('config.js') < 0)
+                .forEach(f => sources[utils.getProcessor(f)].push(f));
         } else {
             throw new Error(`Targets [${chalk.red(input)}] not found.`);
         }
