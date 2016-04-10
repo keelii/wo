@@ -100,6 +100,7 @@ function addRuntimeVal(arg, configPath) {
     options._cmd = arg._[0];
     options._CWD = configPath || process.cwd();
     options._VERSION = arg.ver || options.version;
+    options._MSG = arg.m || '';
     options._SOURCE_ROOT = path.join(options._CWD, options.source);
     options._COMPONENT_ROOT = path.join(options._SOURCE_ROOT, options.component.dir);
     options._VIEW_ROOT = path.join(options._SOURCE_ROOT, options.view);

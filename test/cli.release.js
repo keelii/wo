@@ -10,10 +10,26 @@ const release = require('../cli/release');
 const utils = require('../lib/utils');
 
 describe('cli/release', function () {
-    it('should get tag list', function (done) {
-        release.getTag('git tag', function (err, tagname) {
-            assert.equal(utils.getTagName(), tagname);
-            done();
+    let tag = null;
+    before(function (done) {
+        release(settings, function (err, res) {
+            if (err) {
+                return release.execute(`git tag -d ${tag}`);
+            }
+            tag = res;
+            done(err);
         });
     });
+    after(function (done) {
+        release.execute(`git tag -d ${tag}`, function (err) {
+            done(err);
+        });
+    });
+
+    it('should release a tag', function () {
+        assert.equal(
+            tag,
+            utils.getTagName()
+        );
+    })
 });

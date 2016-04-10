@@ -5,26 +5,10 @@ const async = require('async');
 
 const utils   = require('../lib/utils');
 
-function getMessage(msg, callback) {
-    console.log(chalk.yellow('\nRelease Tag Message\n---------------'));
-    utils.ask(chalk.gray(msg[0]), function (title) {
-        utils.ask(chalk.gray(msg[1]), function (desc) {
-            callback([title, desc]);
-            process.stdin.emit('end');
-        });
-    });
-}
-
 function execute(cmd, callback) {
     exec(cmd, (error, stdout, stderr) => {
         if (error) {
             return callback(error);
-        }
-        if (stderr) {
-            return callback(stderr);
-        }
-        if (stdout) {
-            console.log(stdout);
         }
 
         callback(null, stdout);
@@ -35,9 +19,6 @@ function getTag(cmd, callback) {
     exec(cmd, (error, stdout, stderr) => {
         if (error) {
             return callback(error);
-        }
-        if (stderr) {
-            return callback(stderr);
         }
 
         let tags = stdout.trim().split(/\s/);
@@ -56,12 +37,7 @@ function release(config, callback) {
         function(cb) {
             getTag('git tag', cb);
         },
-        function(tagname, cb) {
-            getMessage(['Title', 'Description'], function (msg) {
-                cb(null, tagname, msg);
-            });
-        },
-        function (tagname, msg, cb) {
+        function (tagname, cb) {
             var res = config.release;
             let cmds = [];
 
@@ -69,7 +45,7 @@ function release(config, callback) {
                 cmds.push(res.before);
             }
 
-            cmds.push(`git tag ${tagname} -m "${msg.join(',')}"`);
+            cmds.push(`git tag ${tagname} -m "${config._MSG}"`);
 
             if (res.after) {
                 cmds.push(res.after);
@@ -77,7 +53,7 @@ function release(config, callback) {
 
             execute(cmds.join(' && '), function (err, res) {
                 if (err) {
-                    cb(err);
+                    cb(err, tagname);
                 } else {
                     cb(null, tagname);
                 }
@@ -86,18 +62,19 @@ function release(config, callback) {
     ], callback);
 }
 
-module.exports = function(config, input, callback) {
+module.exports = function(config, callback) {
     callback = callback || function() {};
 
     release(config, function (err, result) {
         if (err) {
-            console.error(err);
+            callback(err);
         } else {
             if (!config.nolog) {
                 console.log(`Release a new tag [${chalk.green(result)}]`);
             }
-            callback(null, 'result');
+            callback(null, result);
         }
     });
 };
 module.exports.getTag = getTag;
+module.exports.execute = execute;
