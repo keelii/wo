@@ -28,7 +28,7 @@ describe('cli/gen', function () {
 
     it('should throw an error while generating project', function (done) {
         gen(settings, '*()_+', function (err) {
-            assert.equal(true, !!err);
+            assert.equal('gen error', err);
             done();
         });
     });
