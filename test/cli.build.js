@@ -14,6 +14,10 @@ function readFile(filename) {
     return content.replace(/^\s+|\s+$/g, '');
 }
 
+function trimAll(str) {
+    return str.replace(/\s+/g, '');
+}
+
 describe('cli/build - no input', function () {
     argv.production = true;
     let settings = require('../default')(argv, __dirname);
@@ -142,10 +146,6 @@ describe('cli/build - development', function () {
     after(function () {
         fse.removeSync('test/.www');
     });
-
-    function trimAll(str) {
-        return str.replace(/\s+/g, '');
-    }
 
     let sourceDir = path.join(settings._SERVER_ROOT, settings.component.dir);
 

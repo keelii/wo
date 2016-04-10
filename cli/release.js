@@ -35,7 +35,7 @@ function getTag(cmd, callback) {
 function release(config, callback) {
     async.waterfall([
         function(cb) {
-            getTag('git tag', cb);
+            getTag('gitx tag', cb);
         },
         function (tagname, cb) {
             var res = config.release;

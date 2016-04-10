@@ -18,27 +18,38 @@ describe('cli/release', function () {
     });
 });
 
-//describe('cli/release', function () {
-//    let tag = null;
-//    before(function (done) {
-//        release(settings, function (err, res) {
-//            if (err) {
-//                return release.execute(`git tag -d ${tag}`, () => {});
-//            }
-//            tag = res;
-//            done(err);
-//        });
-//    });
-//    after(function (done) {
-//        release.execute(`git tag -d ${tag}`, function (err) {
-//            done(err);
-//        });e
-//    });
-//
-//    it('should release a tag', function () {
-//        assert.equal(
-//            tag,
-//            utils.getTagName()
-//        );
-//    })
-//});
+describe('cli/release', function () {
+    let tag = null;
+    var hasGit = true;
+    before(function (done) {
+        release(settings, function (err, res) {
+            if (err) {
+                hasGit = false;
+                done();
+                return release.execute(`git tag -d ${tag}`, () => {});
+            }
+            tag = res;
+            done(err);
+        });
+    });
+    after(function (done) {
+        if (hasGit) {
+            release.execute(`git tag -d ${tag}`, function (err) {
+                done(err);
+            });
+        } else {
+            done();
+        }
+    });
+
+    it('should release a tag', function () {
+        if (hasGit) {
+            assert.equal(
+                tag,
+                utils.getTagName()
+            );
+        } else {
+            assert.equal(null, tag);
+        }
+    })
+});
