@@ -21,11 +21,15 @@ describe('lib/nunjucks', function () {
     settings._arg.nunjucks = true;
 
     before(function (done) {
-        build(settings, null, done);
+        build(settings, 'test/app/views/*.html', done);
     });
     after(function () {
         fse.removeSync('test/build');
     });
+
+    function trimAll(str) {
+        return str.replace(/\s+/g, '');
+    }
 
     let templateDir = path.join(settings._DEST_ROOT, settings.view);
 
@@ -33,6 +37,12 @@ describe('lib/nunjucks', function () {
         assert.equal(
             '<h1>3</h1>',
             readFile(path.join(templateDir, 'index.html'))
+        );
+    });
+    it('should compile nunjucks file to development with component footer', function() {
+        assert.equal(
+            '<h1><footer>footer</footer></h1>',
+            trimAll(readFile(path.join(templateDir, 'test.component.html')))
         );
     });
 });

@@ -1,0 +1,11 @@
+#foo {
+    background: url(../main/i/bg.png);
+    background: url(../main/i/bg.png);
+
+    i {
+        background: url(/component/main/i/bg.png);
+    }
+    b {
+        background: url(//main/i/bg.png);
+    }
+}

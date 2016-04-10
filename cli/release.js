@@ -1,9 +1,8 @@
 'use strict';
-const vfs = require('vinyl-fs');
 const exec = require('child_process').exec;
 const chalk = require('chalk');
 const async = require('async');
-const build   = require('./build');
+
 const utils   = require('../lib/utils');
 
 function getMessage(msg, callback) {
@@ -16,7 +15,7 @@ function getMessage(msg, callback) {
     });
 }
 
-function pushTag(cmd, callback) {
+function execute(cmd, callback) {
     exec(cmd, (error, stdout, stderr) => {
         if (error) {
             return callback(error);
@@ -32,12 +31,7 @@ function pushTag(cmd, callback) {
     });
 }
 
-function getTags(cmd, callback) {
-    function getTagName() {
-        var now = new Date();
-        return `RELEASE/${now.getFullYear()}-${now.getMonth()+1}-${now.getDate()}/${now.getHours()}-${now.getMinutes()}`;
-    }
-
+function getTag(cmd, callback) {
     exec(cmd, (error, stdout, stderr) => {
         if (error) {
             return callback(error);
@@ -46,37 +40,21 @@ function getTags(cmd, callback) {
             return callback(stderr);
         }
 
-        var tags = stdout.trim().split(/\s/);
-        var tagName = getTagName();
+        let tags = stdout.trim().split(/\s/);
+        let tagName = utils.getTagName();
 
         if (tags.indexOf(tagName) > -1) {
             callback(`Release Tag ${tagName} already exists.`);
         } else {
-            callback(null, getTagName());
+            callback(null, tagName);
         }
-    });
-}
-
-function removeTag(tagname, callback) {
-    exec(`git tag -d ${tagname}`, (error, stdout, stderr) => {
-        if (error) {
-            return callback(error);
-        }
-        if (stderr) {
-            return callback(stderr);
-        }
-
-        callback(null, 'success');
     });
 }
 
 function release(config, callback) {
-    // TODO
-    var cmds = config.release.cmds;
-
     async.waterfall([
         function(cb) {
-            getTags('git tag', cb);
+            getTag('git tag', cb);
         },
         function(tagname, cb) {
             getMessage(['Title', 'Description'], function (msg) {
@@ -84,30 +62,42 @@ function release(config, callback) {
             });
         },
         function (tagname, msg, cb) {
-            var cmds = config.release.cmds.concat([
-                `git tag ${tagname} -m "${msg.join(',')}"`,
-                `git pull origin master`,
-                `git push origin master --tag`
-            ]);
-            pushTag(cmds.join(' && '), cb);
+            var res = config.release;
+            let cmds = [];
+
+            if (res.before) {
+                cmds.push(res.before);
+            }
+
+            cmds.push(`git tag ${tagname} -m "${msg.join(',')}"`);
+
+            if (res.after) {
+                cmds.push(res.after);
+            }
+
+            execute(cmds.join(' && '), function (err, res) {
+                if (err) {
+                    cb(err);
+                } else {
+                    cb(null, tagname);
+                }
+            });
         }
     ], callback);
 }
 
 module.exports = function(config, input, callback) {
-    //input = input || config._arg._[1];
     callback = callback || function() {};
 
-    console.log('Building sources\n...');
-    build(config, input, function() {
-        console.log('Build done. \nReleasing new version to repo\n...');
-        release(config, function (err, result) {
-            if (err) {
-                console.error(err);
-            } else {
-                console.log('All done.');
-                callback(null, 'result');
+    release(config, function (err, result) {
+        if (err) {
+            console.error(err);
+        } else {
+            if (!config.nolog) {
+                console.log(`Release a new tag [${chalk.green(result)}]`);
             }
-        });
+            callback(null, 'result');
+        }
     });
 };
+module.exports.getTag = getTag;

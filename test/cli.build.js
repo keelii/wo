@@ -16,7 +16,7 @@ function readFile(filename) {
     return content.replace(/^\s+|\s+$/g, '');
 }
 
-describe('cli/build', function () {
+describe('cli/build - no input', function () {
     argv.production = true;
     let settings = require('../default')(argv, __dirname);
 
@@ -62,6 +62,119 @@ describe('cli/build', function () {
     });
 });
 
+describe('cli/build - input as single file', function () {
+    argv.production = true;
+    let settings = require('../default')(argv, __dirname);
+
+    afterEach(function () {
+        fse.removeSync('test/build');
+    });
+
+    let sourceDir = path.join(settings._DEST_ROOT, settings.component.dir);
+
+    it('should compress single javascript file to production targets', function(done) {
+        build(settings, 'test/app/components/main/main.js', function () {
+            assert.equal(
+                '!function(o){o.location.href="//jd.com"}(window);',
+                readFile(path.join(sourceDir, 'main/main.js'))
+            );
+            done();
+        });
+    });
+
+    it('should compile & compress single sass file to production targets', function(done) {
+        build(settings, 'test/app/components/main/main.scss', function () {
+            assert.equal(
+                '.icons i{display:inline-block}',
+                readFile(path.join(sourceDir, 'main/main.css'))
+            );
+            done();
+        });
+    });
+
+    it('should copy assets to target', function(done) {
+        let cur = path.join(sourceDir, 'main/i/mouse.cur');
+
+        build(settings, 'test/app/components/main/i/mouse.cur', function () {
+            assert.equal(true, fs.existsSync(cur));
+            done();
+        });
+    });
+
+    it('should copy img to target', function(done) {
+        let cur = path.join(sourceDir, 'main/i/bg.png');
+
+        build(settings, 'test/app/components/main/i/bg.png', function () {
+            assert.equal(true, fs.existsSync(cur));
+            done();
+        });
+    });
+
+    it('should return not validate input', function(done) {
+        build(settings, 'test/app/components/main/not.validate.file', function (err) {
+            assert.equal(err, 'input not validated');
+            done();
+        });
+    });
+});
+
+describe('cli/build - development', function () {
+    argv.development = true;
+    argv.production = false;
+    let settings = require('../default')(argv, __dirname);
+
+    before(function (done) {
+        build(settings, null, done);
+    });
+    after(function () {
+        fse.removeSync('test/.www');
+    });
+
+    function trimAll(str) {
+        return str.replace(/\s+/g, '');
+    }
+
+    let sourceDir = path.join(settings._SERVER_ROOT, settings.component.dir);
+
+    it('should copy javascript file to development', function() {
+        assert.equal(
+            `(function(w){w.location.href='//jd.com';})(window);`,
+            trimAll(readFile(path.join(sourceDir, 'main/main.js')))
+        );
+    });
+    it('should copy sass file to development', function() {
+        assert.equal(
+            '/*icons*/.iconsi{display:inline-block;}',
+            trimAll(readFile(path.join(sourceDir, 'main/main.css')))
+        );
+    });
+    it('should copy assets to development', function() {
+        let cur = path.join(sourceDir, 'main/i/mouse.cur');
+
+        assert.equal(true, fs.existsSync(cur));
+    });
+    it('should copy img to development', function() {
+        let cur = path.join(sourceDir, 'main/i/bg.png');
+
+        assert.equal(true, fs.existsSync(cur));
+    });
+});
+describe('cli/build - log', function () {
+    argv.production = true;
+    let settings = require('../default')(argv, __dirname);
+    settings._showLog = true;
+
+    after(function () {
+        fse.removeSync('test/build');
+    });
+    it('should get log time for uglify process', function (done) {
+        build(settings, 'test/app/components/main/main.js', function (err, res) {
+            assert.equal('log success', res);
+            done();
+        });
+    })
+});
+
 describe('cli/build - #getSources', function () {
     let settings = require('../default')(argv, __dirname);
 
@@ -84,9 +197,11 @@ describe('cli/build - #getSources', function () {
     it('should get sources with passed scss glob pattern', function () {
         let s = getSources(settings, 'test/app/components/**/*.scss');
 
-        assert.equal(3, s.sass.length);
+        assert.equal(5, s.sass.length);
         assert.deepEqual(
-            [ 'test/app/components/main/__sprite.scss',
+            [ 'test/app/components/footer/footer.rebasePath.scss',
+                'test/app/components/footer/footer.scss',
+                'test/app/components/main/__sprite.scss',
                 'test/app/components/main/main.scss',
                 'test/app/components/main/mixin/border.scss' ],
             s.sass
@@ -114,9 +229,10 @@ describe('cli/build - #getSources', function () {
         assert.equal(1, s.uglify.length);
         assert.equal('test/app/components/main/main.js', s.uglify[0]);
 
-        assert.equal(2, s.sass.length);
         assert.deepEqual(
-            [ 'test/app/components/main/__sprite.scss',
+            [ 'test/app/components/footer/footer.rebasePath.scss',
+                'test/app/components/footer/footer.scss',
+                'test/app/components/main/__sprite.scss',
                 'test/app/components/main/main.scss' ],
             s.sass
         );

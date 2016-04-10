@@ -99,8 +99,9 @@ function build(config, input, callback) {
 
     if (utils.isFile(input)) {
         if (!utils.isNormalFile(input)) {
-            return callback();
+            return callback('input not validated');
         }
+
         return Processor[utils.getProcessor(input)](config, input, callback);
     }
 

@@ -4,7 +4,7 @@ const path = require("path");
 const assert = require("assert");
 
 const argv = require('minimist')(process.argv.slice(2));
-const settings = require('../default')(argv, __dirname, true);
+const settings = require('../default')(argv, __dirname);
 const gen = require('../cli/gen');
 
 describe('cli/gen - default', function () {
