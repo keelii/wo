@@ -17,7 +17,7 @@ describe('cli/release', function () {
         });
     });
 });
-//
+
 //describe('cli/release', function () {
 //    let tag = null;
 //    before(function (done) {
