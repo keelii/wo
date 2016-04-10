@@ -41,7 +41,7 @@ describe('lib/nunjucks', function () {
     });
     it('should compile nunjucks file to development with component footer', function() {
         assert.equal(
-            '<h1><footer>footer</footer></h1>',
+            `<linktype="text/css"rel="stylesheet"href="//your.domain.com/cdn-path/project_name/0.0.0/components/footer/footer.css"/><h1><footer>footer</footer><i><linktype="text/css"rel="stylesheet"href="//your.domain.com/cdn-path/project_name/0.0.0/components/??"/></i><s><scriptsrc="//your.domain.com/cdn-path/project_name/0.0.0/components/??"></script></s><b>val</b></h1>`,
             trimAll(readFile(path.join(templateDir, 'test.component.html')))
         );
     });

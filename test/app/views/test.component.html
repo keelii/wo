@@ -1,1 +1,10 @@
-<h1>{% component 'footer' %}</h1>
+{{ Tag('link', '/components/footer/footer.css') }}
+<h1>
+    {% setGlobal key="val" %}
+    {% component 'footer' %}
+    {% set data = { foo: "foo", bar: "bar"} %}
+
+    <i>{{ data | exclude('bar') | source('link') }}</i>
+    <s>{{ data | source('script') }}</s>
+    <b>{{ key }}</b>
+</h1>
