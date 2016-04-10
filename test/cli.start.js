@@ -3,7 +3,6 @@ const http = require("http");
 const fse = require('fs-extra');
 const path = require("path");
 const assert = require("assert");
-const request = require('request');
 
 const argv = require('minimist')(process.argv.slice(2));
 argv.development = true;
