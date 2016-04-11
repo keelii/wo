@@ -72,7 +72,7 @@ describe('cli/start', function() {
     let htmlDestFile = path.join(settings._DEST_ROOT, 'views/index.html');
     let htmlContent = fs.readFileSync(htmlSourceFile).toString();
 
-    it('should trigger script file change event', function (done) {
+    it('should trigger nunjucks file change event', function (done) {
         fs.writeFileSync(htmlSourceFile, htmlContent + '<b></b>', 'utf8');
 
         setTimeout(function() {
@@ -91,7 +91,7 @@ describe('cli/start', function() {
     let macoDestFile = path.join(settings._DEST_ROOT, 'views/index.html');
     let macoContent = fs.readFileSync(macoSourceFile).toString();
 
-    it('should trigger html file change event', function (done) {
+    it('should trigger nunjucks maco file change event', function (done) {
         fs.writeFileSync(macoSourceFile, macoContent + '{%%}', 'utf8');
 
         setTimeout(function() {
@@ -109,7 +109,7 @@ describe('cli/start', function() {
     let mixinDestFile = path.join(settings._DEST_ROOT, 'components/main/main.css');
     let mixinContent = fs.readFileSync(mixinSourceFile).toString();
 
-    it('should trigger html file change event', function (done) {
+    it('should trigger sass mixin file change event', function (done) {
         fs.writeFileSync(mixinSourceFile, mixinContent + 'i{text-align:center;}', 'utf8');
 
         setTimeout(function() {

@@ -30,8 +30,6 @@ function log(e, rPath) {
 }
 
 function server(config, callback) {
-    callback = callback || function() {};
-
     shs(config._SERVER_ROOT, {
         nolog: config.nolog,
         index: config.server.index,
@@ -51,8 +49,6 @@ function handleWatchEvent(config, callback) {
 }
 
 function watch(config, callback){
-    callback = callback || function() {};
-
     config.watcher = chokidar.watch(config._SOURCE_ROOT, {
         ignored: config.watchIgnore,
         ignoreInitial: true
@@ -97,8 +93,6 @@ function watchRefs(config) {
 }
 
 module.exports = function(config, input, callback) {
-    callback = callback || function() {};
-
     async.series([
         cb => build(config, input, cb),
         cb => server(config, cb),

@@ -2,9 +2,9 @@
 <h1>
     {% setGlobal key="val" %}
     {% component 'footer' %}
-    {% set data = { foo: "foo", bar: "bar"} %}
+    {% set data = { 'components/crumb/crumb': { name: 'crumb', path: 'components/crumb/crumb'},'components/footer/footer': { name: 'footer', path: 'components/footer/footer'} } %}
 
-    <i>{{ data | exclude('bar') | source('link') }}</i>
+    <i>{{ data | exclude('crumb') | source('link') }}</i>
     <s>{{ data | source('script') }}</s>
     <b>{{ key }}</b>
 </h1>

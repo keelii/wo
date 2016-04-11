@@ -1,3 +1,10 @@
+'use strict';
+
+function getTagName() {
+    let now = new Date();
+    return `RELEASE/${now.getFullYear()}-${now.getMonth()+1}-${now.getDate()}/${now.getHours()}-${now.getMinutes()}`;
+}
+
 module.exports = {
     name: 'project_name',
     version: '0.0.0',
@@ -59,5 +66,12 @@ module.exports = {
         src: 'build/**',
         dest: './'
     },
+
+    release: {
+        cmds: [
+            `ls`
+        ]
+    },
+
     nolog: false
 };

@@ -33,15 +33,15 @@ describe('lib/nunjucks', function () {
 
     let templateDir = path.join(settings._DEST_ROOT, settings.view);
 
-    it('should compile nunjucks file to development targets', function() {
+    it('should compile nunjucks extension inject', function() {
         assert.equal(
-            '<h1>3</h1>',
-            readFile(path.join(templateDir, 'index.html'))
+            '<html><head><title>Links</title></head><body>0</body></html>',
+            trimAll(readFile(path.join(templateDir, 'inject.html')))
         );
     });
     it('should compile nunjucks file to development with component footer', function() {
         assert.equal(
-            `<linktype="text/css"rel="stylesheet"href="//your.domain.com/cdn-path/project_name/0.0.0/components/footer/footer.css"/><h1><footer>footer</footer><i><linktype="text/css"rel="stylesheet"href="//your.domain.com/cdn-path/project_name/0.0.0/components/??"/></i><s><scriptsrc="//your.domain.com/cdn-path/project_name/0.0.0/components/??"></script></s><b>val</b></h1>`,
+            `<linktype="text/css"rel="stylesheet"href="//your.domain.com/cdn-path/project_name/0.0.0/components/footer/footer.css"/><h1><footer>footer</footer><i><linktype="text/css"rel="stylesheet"href="//your.domain.com/cdn-path/project_name/0.0.0/components/??/footer/footer.css"/></i><s><scriptsrc="//your.domain.com/cdn-path/project_name/0.0.0/components/??"></script></s><b>val</b></h1>`,
             trimAll(readFile(path.join(templateDir, 'test.component.html')))
         );
     });

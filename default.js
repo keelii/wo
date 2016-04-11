@@ -75,8 +75,7 @@ const defaults = {
     },
 
     release: {
-        before: '',
-        after: ''
+        cmds: []
     }
 };
 
