@@ -17,17 +17,15 @@ function trimAll(str) {
     return str.replace(/\s+/g, '');
 }
 
+const source = 'test/app/components/footer/footer.rebasePath.scss';
+
 describe('lib/rebasePath - development', function () {
     argv.development = true;
     argv.production = false;
     let settings = require('../default')(argv, __dirname);
 
-    before(function (done) {
-        build(settings, 'test/app/components/footer/footer.rebasePath.scss', done);
-    });
-    after(function () {
-        fse.removeSync('test/.www');
-    });
+    before((done) => build(settings, source, done));
+    after(() => fse.removeSync('test/.www'));
     let sourceDir = path.join(settings._DEST_ROOT, settings.component.dir);
 
     it('should compile sass and not rebase path ref', function() {
@@ -43,12 +41,8 @@ describe('lib/rebasePath - production', function () {
     argv.production = true;
     let settings = require('../default')(argv, __dirname);
 
-    before(function (done) {
-        build(settings, 'test/app/components/footer/footer.rebasePath.scss', done);
-    });
-    after(function () {
-        fse.removeSync('test/build');
-    });
+    before((done) => build(settings, source, done));
+    after(() => fse.removeSync('test/build'));
 
     let sourceDir = path.join(settings._DEST_ROOT, settings.component.dir);
 

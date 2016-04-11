@@ -18,19 +18,24 @@ function trimAll(str) {
 describe('cli/start - exception', function() {
     it('should return not validate input', function (done) {
         start(settings, 'test/app/components/main/not.validate.file', function (err) {
-            console.log(err);
             assert.equal(err, 'input not validated');
             done();
         });
     });
+
+    after(() => fse.removeSync('test/.www'));
 });
 
 describe('cli/start', function() {
-    before(function (done) {
-        start(settings, null, function () {
-            setTimeout(done, 500);
-        });
+    before((done) => start(settings, null, () => setTimeout(done, 500)));
+    afterEach(function () {
+        fs.writeFileSync(jsSourceFile, jsContent, 'utf8');
+        fs.writeFileSync(cssSourceFile, cssContent, 'utf8');
+        fs.writeFileSync(htmlSourceFile, htmlContent, 'utf8');
+        fs.writeFileSync(macoSourceFile, macoContent, 'utf8');
+        fs.writeFileSync(mixinSourceFile, mixinContent, 'utf8');
     });
+    after(() => fse.removeSync('test/build'));
 
     let jsSourceFile = path.join(settings._COMPONENT_ROOT, 'main/main.js');
     let jsDestFile = path.join(settings._DEST_ROOT, 'components/main/main.js');
@@ -130,14 +135,5 @@ describe('cli/start', function() {
         }).on('error', (e) => {
             throw new Error(e);
         });
-    });
-
-    afterEach(function () {
-        fs.writeFileSync(jsSourceFile, jsContent, 'utf8');
-        fs.writeFileSync(cssSourceFile, cssContent, 'utf8');
-        fs.writeFileSync(htmlSourceFile, htmlContent, 'utf8');
-        fs.writeFileSync(macoSourceFile, macoContent, 'utf8');
-        fs.writeFileSync(mixinSourceFile, mixinContent, 'utf8');
-        //fse.removeSync('test/.www');
     });
 });

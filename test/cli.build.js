@@ -22,12 +22,8 @@ describe('cli/build - no input', function () {
     argv.production = true;
     let settings = require('../default')(argv, __dirname);
 
-    before(function (done) {
-        build(settings, null, done);
-    });
-    after(function () {
-        fse.removeSync('test/build');
-    });
+    before((done) => build(settings, null, done));
+    after(() => fse.removeSync('test/build'));
 
     let sourceDir = path.join(settings._DEST_ROOT, settings.component.dir);
 
@@ -64,9 +60,7 @@ describe('cli/build - sprite', function () {
     argv.sprite = true;
     let settings = require('../default')(argv, __dirname);
 
-    before(function (done) {
-        build(settings, null, done);
-    });
+    before((done) => build(settings, null, done));
     after(function () {
         fse.removeSync('test/app/components/main/__sprite.scss');
         fse.removeSync('test/app/components/main/i/__sprite.png');
@@ -140,9 +134,7 @@ describe('cli/build - development', function () {
     argv.production = false;
     let settings = require('../default')(argv, __dirname);
 
-    before(function (done) {
-        build(settings, null, done);
-    });
+    before((done) => build(settings, null, done));
     after(function () {
         fse.removeSync('test/.www');
     });

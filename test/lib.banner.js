@@ -19,12 +19,8 @@ describe('lib/banner', function () {
     let settings = require('../default')(argv, __dirname);
     settings.banner = '/*banner you want*/';
 
-    before(function (done) {
-        build(settings, null, done);
-    });
-    after(function () {
-        fse.removeSync('test/build');
-    });
+    before((done) => build(settings, null, done));
+    after(() => fse.removeSync('test/build'));
 
     let sourceDir = path.join(settings._DEST_ROOT, settings.component.dir);
 

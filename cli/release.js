@@ -3,8 +3,6 @@ const exec = require('child_process').exec;
 const chalk = require('chalk');
 const async = require('async');
 
-const utils   = require('../lib/utils');
-
 function execute(cmd, callback) {
     exec(cmd, (error, stdout, stderr) => {
         if (error || stderr) {
@@ -39,4 +37,3 @@ module.exports = function(config, callback) {
         }
     });
 };
-module.exports.execute = execute;

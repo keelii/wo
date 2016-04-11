@@ -20,12 +20,8 @@ describe('lib/nunjucks', function () {
 
     settings._arg.nunjucks = true;
 
-    before(function (done) {
-        build(settings, 'test/app/views/*.html', done);
-    });
-    after(function () {
-        fse.removeSync('test/build');
-    });
+    before((done) => build(settings, 'test/app/views/*.html', done));
+    after(() => fse.removeSync('test/build'));
 
     function trimAll(str) {
         return str.replace(/\s+/g, '');
