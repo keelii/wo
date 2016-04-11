@@ -2,7 +2,7 @@ module.exports = {
     name: 'project_name',
     version: '0.0.0',
 
-    production: 'http://your.domain.com/cdn-path/',
+    production: '//your.domain.com/cdn-path/',
 
     banner: '',
     scripts: ['test/app/components/**/*.js'],
@@ -59,8 +59,5 @@ module.exports = {
         src: 'build/**',
         dest: './'
     },
-    nolog: true,
-    _arg: {
-        _: []
-    }
+    nolog: true
 };

@@ -75,11 +75,8 @@ const defaults = {
     },
 
     release: {
-        cmds: [
-            'git pull origin master',
-            'git tag {tag}'
-        ],
-        dest: 'build'
+        before: '',
+        after: ''
     }
 };
 
@@ -91,7 +88,9 @@ function addRuntimeVal(arg, configPath) {
         config = require(path.join(configPath, 'config.js'));
     } catch (err) {
         if (cmdMap[arg._[0]] != 'gen') {
-            console.info('Config file not found. Make sure your cwd has config.js file.');
+            let msg = 'Config file not found. Make sure your cwd has [config.js].';
+            console.info(msg);
+            return msg;
         }
     }
 
@@ -101,6 +100,7 @@ function addRuntimeVal(arg, configPath) {
     options._cmd = arg._[0];
     options._CWD = configPath || process.cwd();
     options._VERSION = arg.ver || options.version;
+    options._MSG = arg.m || '';
     options._SOURCE_ROOT = path.join(options._CWD, options.source);
     options._COMPONENT_ROOT = path.join(options._SOURCE_ROOT, options.component.dir);
     options._VIEW_ROOT = path.join(options._SOURCE_ROOT, options.view);
@@ -121,7 +121,7 @@ function addRuntimeVal(arg, configPath) {
     // Production
     options._isPrd = options._arg.production || /build|release|deploy/.test(cmdMap[options._cmd]);
     // Release
-    options._isRel = cmdMap[options._cmd] === 'release';
+    //options._isRel = cmdMap[options._cmd] === 'release';
 
     options._DEST_ROOT = path.resolve(options.dest);
     if (options._isDev) {
@@ -130,14 +130,14 @@ function addRuntimeVal(arg, configPath) {
     if (options._isPrd) {
         options._DEST_ROOT = path.join(options._CWD, options.dest, options._PRD_PREFIX);
     }
-    if (options._isRel) {
-        options._DEST_ROOT = path.join(options._CWD, options.release.dest, options._PRD_PREFIX);
-    }
+    //if (options._isRel) {
+    //    options._DEST_ROOT = path.join(options._CWD, options.release.dest, options._PRD_PREFIX);
+    //}
     // component data
     options._components = {};
     options._sass = {};
 
-    return options;
+    return _.defaultsDeep({}, options);
 }
 
 module.exports = addRuntimeVal;

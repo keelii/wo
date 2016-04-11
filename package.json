@@ -1,6 +1,6 @@
 {
   "name": "wooo",
-  "version": "0.0.25",
+  "version": "0.0.26",
   "author": "keelii <keeliizhou@gmail.com>",
   "description": "FE Build tool with easy cli.",
   "license": "MIT",
@@ -17,7 +17,7 @@
   },
   "scripts": {
     "cover": "istanbul cover ./node_modules/mocha/bin/_mocha -- -R spec && ./node_modules/.bin/codecov",
-    "test": "./node_modules/.bin/mocha ./test/test.js --reporter spec",
+    "test": "./node_modules/.bin/mocha ./test/ --reporter spec",
     "changelog": "github-changes -o keelii -r wo"
   },
   "repository": {
@@ -48,7 +48,6 @@
   "devDependencies": {
     "codecov": "^1.0.1",
     "istanbul": "^0.4.2",
-    "mocha": "^2.4.5",
-    "request": "^2.69.0"
+    "mocha": "^2.4.5"
   }
 }

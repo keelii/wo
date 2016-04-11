@@ -39,9 +39,11 @@ function server(config, callback) {
     }, callback);
 }
 
-function handleWatchEvent(callback) {
+function handleWatchEvent(config, callback) {
     return function(event, path) {
-        log(event, path);
+        if (!config.nolog) {
+            log(event, path);
+        }
         if (event !== 'unlink' && utils.isNormalFile(path)) {
             callback(path);
         }
@@ -54,13 +56,13 @@ function watch(config, callback){
     config.watcher = chokidar.watch(config._SOURCE_ROOT, {
         ignored: config.watchIgnore,
         ignoreInitial: true
-    }).on('all', handleWatchEvent(function (path) {
+    }).on('all', handleWatchEvent(config, function (path) {
         build(config, path);
     }));
 
     chokidar.watch(config.templateRefs, {
         ignoreInitial: true
-    }).on('all', handleWatchEvent(function () {
+    }).on('all', handleWatchEvent(config, function () {
         build(config, config.templates[0]);
     }));
 
@@ -82,7 +84,7 @@ function watchRefs(config) {
         chokidar.watch(tar, {
             ignored: config.watchIgnore,
             ignoreInitial: true
-        }).on('all', handleWatchEvent(function () {
+        }).on('all', handleWatchEvent(config, function () {
             build(config, des.concat(tar));
         }));
     }
