@@ -15,9 +15,19 @@ function trimAll(str) {
     return str.replace(/\s+/g, '');
 }
 
+describe('cli/start - exception', function() {
+    it('should return not validate input', function (done) {
+        start(settings, 'test/app/components/main/not.validate.file', function (err) {
+            console.log(err);
+            assert.equal(err, 'input not validated');
+            done();
+        });
+    });
+});
+
 describe('cli/start', function() {
     before(function (done) {
-        start(settings, function () {
+        start(settings, null, function () {
             setTimeout(done, 500);
         });
     });
@@ -95,6 +105,24 @@ describe('cli/start', function() {
         }, 500);
     });
 
+    let mixinSourceFile = path.join(settings._COMPONENT_ROOT, 'main/mixin/border.scss');
+    let mixinDestFile = path.join(settings._DEST_ROOT, 'components/main/main.css');
+    let mixinContent = fs.readFileSync(mixinSourceFile).toString();
+
+    it('should trigger html file change event', function (done) {
+        fs.writeFileSync(mixinSourceFile, mixinContent + 'i{text-align:center;}', 'utf8');
+
+        setTimeout(function() {
+            let mixinChangedContent = fs.readFileSync(mixinDestFile).toString();
+
+            assert.equal(
+                `/*icons*/i{text-align:center;}.iconsi{display:inline-block;}`,
+                trimAll(mixinChangedContent)
+            );
+            done();
+        }, 500);
+    });
+
     it('should start a local http server.', function (done) {
         http.get('http://localhost:2048/', (res) => {
             assert.equal(200, res.statusCode);
@@ -109,6 +137,7 @@ describe('cli/start', function() {
         fs.writeFileSync(cssSourceFile, cssContent, 'utf8');
         fs.writeFileSync(htmlSourceFile, htmlContent, 'utf8');
         fs.writeFileSync(macoSourceFile, macoContent, 'utf8');
+        fs.writeFileSync(mixinSourceFile, mixinContent, 'utf8');
         //fse.removeSync('test/.www');
     });
 });

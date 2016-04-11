@@ -51,5 +51,11 @@ describe('cli/release', function () {
         } else {
             assert.equal(null, tag);
         }
+    });
+    it('should execute false', function (done) {
+        release.execute(`gitabc tag -d`, function (err) {
+            assert.equal(true, !!err);
+            done();
+        });
     })
 });

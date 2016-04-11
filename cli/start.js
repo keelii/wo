@@ -96,16 +96,16 @@ function watchRefs(config) {
     }
 }
 
-module.exports = function(config, callback) {
+module.exports = function(config, input, callback) {
     callback = callback || function() {};
 
     async.series([
-        cb => build(config, null, cb),
+        cb => build(config, input, cb),
         cb => server(config, cb),
         cb => watch(config, cb)
     ], function (err) {
         if (err) {
-            console.error(err);
+            return callback(err);
         }
 
         watchRefs(config);

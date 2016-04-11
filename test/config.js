@@ -59,5 +59,5 @@ module.exports = {
         src: 'build/**',
         dest: './'
     },
-    nolog: true
+    nolog: false
 };
