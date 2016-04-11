@@ -27,8 +27,9 @@ describe('cli/gen', function () {
     });
 
     it('should throw an error while generating project', function (done) {
-        gen(settings, '*()_+', function (err) {
-            assert.equal('gen error', err);
+        var res = '../../../../../../../../../../../../../../../~!@#$%^&*()';
+        gen(settings, res, function (err) {
+            assert.equal(false, fs.existsSync(path.join(process.cwd(), res)));
             done();
         });
     });
