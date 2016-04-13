@@ -10,7 +10,13 @@ let argv = require('minimist')(process.argv.slice(2));
 let settings = require('../default')(argv, __dirname);
 
 describe('cli/gen', function () {
-    var cwd = process.cwd();
+    let cwd = process.cwd();
+
+    after(function () {
+        fse.removeSync('project');
+        fse.removeSync('project_name');
+        fse.removeSync('test/test_bare');
+    });
 
     it('should generate a new project named project.', function (done) {
         gen(settings, null, function () {
@@ -27,7 +33,7 @@ describe('cli/gen', function () {
     });
 
     it('should throw an error while generating project', function (done) {
-        var res = '../../../../../../../../../../../../../../../~!@#$%^&*()';
+        let res = '../../../../../../../../../../../../../../../~!@#$%^&*()';
         gen(settings, res, function (err) {
             assert.equal(false, fs.existsSync(path.join(process.cwd(), res)));
             done();
@@ -49,12 +55,6 @@ describe('cli/gen', function () {
             process.chdir(cwd);
             done();
         });
-    });
-
-    after(function () {
-        fse.removeSync('project');
-        fse.removeSync('project_name');
-        fse.removeSync('test/test_bare');
     });
 });
 

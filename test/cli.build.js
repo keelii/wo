@@ -77,9 +77,7 @@ describe('cli/build - input as single file', function () {
     argv.production = true;
     let settings = require('../default')(argv, __dirname);
 
-    afterEach(function () {
-        fse.removeSync('test/build');
-    });
+    afterEach(() => fse.removeSync('test/build'));
 
     let sourceDir = path.join(settings._DEST_ROOT, settings.component.dir);
 
@@ -135,9 +133,7 @@ describe('cli/build - development', function () {
     let settings = require('../default')(argv, __dirname);
 
     before((done) => build(settings, null, done));
-    after(function () {
-        fse.removeSync('test/.www');
-    });
+    after(() => fse.removeSync('test/.www'));
 
     let sourceDir = path.join(settings._SERVER_ROOT, settings.component.dir);
 
@@ -164,20 +160,20 @@ describe('cli/build - development', function () {
         assert.equal(true, fs.existsSync(cur));
     });
 });
+
 describe('cli/build - log', function () {
     argv.production = true;
     let settings = require('../default')(argv, __dirname);
     settings._showLog = true;
 
-    after(function () {
-        fse.removeSync('test/build');
-    });
+    after(() => fse.removeSync('test/build'));
+
     it('should get log time for uglify process', function (done) {
         build(settings, 'test/app/components/main/main.js', function (err, res) {
             assert.equal('log success', res);
             done();
         });
-    })
+    });
 });
 
 describe('cli/build - #getSources', function () {
@@ -186,13 +182,11 @@ describe('cli/build - #getSources', function () {
     it('should get sources with passed directory', function () {
         let s = build.getSources(settings, 'test/app/views/maco');
 
-        assert.equal(2, s.nunjucks.length);
         assert.deepEqual(
             [ 'test/app/views/maco/default.html', 'test/app/views/maco/user.html' ],
             s.nunjucks
         );
     });
-
     it('should get sources with passed js glob pattern', function () {
         let s = build.getSources(settings, 'test/app/components/**/*.js');
 
@@ -210,20 +204,18 @@ describe('cli/build - #getSources', function () {
             s.sass
         );
     });
-
     it('should get sources with passed file array', function () {
-        var files = ['test/app/components/main/main.js', 'test/app/components/main/main.scss'];
+        let files = ['test/app/components/main/main.js', 'test/app/components/main/main.scss'];
         let s = build.getSources(settings, files);
 
         assert.equal(1, s.uglify.length);
         assert.equal(1, s.sass.length);
     });
-
     it('should get sources with passed multi component directory', function () {
-        var files = 'footer,main';
+        let files = 'footer,main';
         let s = build.getSources(settings, files);
 
-        for ( var key in s ) {
+        for ( let key in s ) {
             if ( s.hasOwnProperty(key) ) {
                 s[key] = s[key].map(file => utils.dirToPath(utils.relativeDir(file)));
             }
@@ -242,7 +234,7 @@ describe('cli/build - #getSources', function () {
         assert.equal('test/app/components/footer/footer.html', s.nunjucks[0]);
     });
     it('should get sources with passed single component directory', function () {
-        var files = 'footer';
+        let files = 'footer';
         let s = build.getSources(settings, files);
 
         s.nunjucks[0] =  utils.dirToPath(utils.relativeDir(s.nunjucks[0]));
@@ -250,18 +242,16 @@ describe('cli/build - #getSources', function () {
         assert.equal(1, s.nunjucks.length);
         assert.equal('test/app/components/footer/footer.html', s.nunjucks[0]);
     });
-
     it('should get source with error target', function () {
         assert.throws(
             () => { build.getSources(settings, 'not_found_target') },
             Error
         );
     });
-
     it('should get all source targets', function () {
         let s = build.getSources(settings);
 
-        var res = {
+        let res = {
             uglify: ['test/app/components/**/*.js', '!test/app/components/*/config.js'],
             sass: ['test/app/components/**/*.scss', '!test/app/components/*/config.js'],
             nunjucks: ['test/app/views/*.html', '!test/app/components/*/config.js'],
@@ -295,4 +285,3 @@ describe('cli/build #getGlobFiles', function () {
         );
     });
 });
-
