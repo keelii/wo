@@ -93,6 +93,8 @@ function watchRefs(config) {
 }
 
 module.exports = function(config, input, callback) {
+    callback = callback || function() {};
+
     async.series([
         cb => build(config, input, cb),
         cb => server(config, cb),
