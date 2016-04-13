@@ -44,7 +44,7 @@ function getSources (config, input) {
         if (utils.isMultiTarget(input)) {
             targets = input.split(',')
                 .filter(inp => utils.hasDir(inp, config._COMPONENT_ROOT))
-                .map(inp => path.join(config._COMPONENT_ROOT, inp, '/*'));
+                .map(inp => path.join(config._COMPONENT_ROOT, inp, '/**'));
 
             files = getGlobFiles(targets, config);
 
@@ -52,7 +52,7 @@ function getSources (config, input) {
         }
         // wo build component_name
         if (utils.hasDir(input, config._COMPONENT_ROOT)) {
-            targets = path.join(config._COMPONENT_ROOT, input, '/*');
+            targets = path.join(config._COMPONENT_ROOT, input, '/**');
             files = getGlobFiles(targets, config);
 
             logTarget(utils.relativeDir(targets));
