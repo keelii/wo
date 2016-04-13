@@ -226,7 +226,8 @@ describe('cli/build - #getSources', function () {
         assert.deepEqual(
             [ 'test/app/components/footer/footer.rebasePath.scss',
                 'test/app/components/footer/footer.scss',
-                'test/app/components/main/main.scss' ],
+                'test/app/components/main/main.scss',
+                'test/app/components/main/mixin/border.scss' ],
             s.sass
         );
 
