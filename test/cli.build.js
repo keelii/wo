@@ -255,7 +255,7 @@ describe('cli/build - #getSources', function () {
         let res = {
             uglify: ['test/app/components/**/*.js', '!test/app/components/*/config.js'],
             sass: ['test/app/components/**/*.scss', '!test/app/components/*/config.js'],
-            nunjucks: ['test/app/views/*.html', '!test/app/components/*/config.js'],
+            nunjucks: ['test/app/views/*.html', "app/components/*/*.test.html", '!test/app/components/*/config.js'],
             imagemin: ['test/app/components/**/i/*.+(|jpg|png|gif)', '!test/app/components/*/config.js'],
             copy: ['test/app/components/**/*.cur', '!test/app/components/*/config.js']
         };

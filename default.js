@@ -25,7 +25,7 @@ const defaults = {
     scripts: ['app/components/**/*.js'],
     styles: ['app/components/**/*.scss'],
     images: ['app/components/**/i/*.+(|png|gif)'],
-    templates: ['app/views/*.html'],
+    templates: ['app/views/*.html', 'app/components/*/*.test.html'],
     sprites: {
         cssName: '__sprite.scss',
         imgName: 'i/__sprite.png',

@@ -64,7 +64,27 @@ function watch(config, callback){
 
     callback(null);
 }
+
 function watchRefs(config) {
+    /* transform -  parse sass include to compiler dependence.
+    --Before--
+    {
+        'address/address.scss': ['common/lib.scss'],
+        'baitiao/baitiao.scss': ['common/lib.scss'],
+        'comment/comment.scss': ['common/lib.scss'],
+        'consult/consult.scss': ['common/lib.scss', 'common/pager.scss'],
+    }
+    --After--
+    {
+        'common/lib.scss': [
+            'address/address.scss',
+            'baitiao/baitiao.scss',
+            'comment/comment.scss',
+            'consult/consult.scss'
+        ],
+        'common/pager.scss': ['consult/consult.scss']
+    }
+    */
     var result = _.transform(config._sass, (result, values, key) => {
         values.forEach(function (value) {
             if (!result[value]) {

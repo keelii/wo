@@ -57,7 +57,7 @@ function getSources (config, input) {
 
             logTarget(utils.relativeDir(targets));
         }
-        
+
         if (files) {
             // exinclude component config
             files.filter(f => f.indexOf('config.js') < 0)
@@ -125,13 +125,14 @@ function build(config, input, callback) {
         tasks.push(cb => Processor.imagemin(config, s.imagemin, cb));
     }
     if (s.nunjucks.length) {
-        if (config._arg.nunjucks) {
+        if (config._isDev || config._arg.nunjucks) {
             tasks.push(cb => Processor.nunjucks(config, s.nunjucks, cb));
         }
     }
     if (s.copy.length) {
         tasks.push(cb => Processor.copy(config, s.copy, cb));
     }
+
     async.series(tasks, callback);
 }
 
