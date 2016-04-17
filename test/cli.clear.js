@@ -3,8 +3,10 @@ const fs = require("fs");
 const path = require("path");
 const assert = require("assert");
 
-const argv = require('minimist')(process.argv.slice(2));
-const settings = require('../default')(argv, __dirname, true);
+let argv = require('minimist')(process.argv.slice(2));
+argv.config = path.join(__dirname, 'config.js');
+
+const settings = require('../default')(argv);
 const clear = require('../cli/clear');
 
 describe('cli/clear', function() {

@@ -5,6 +5,8 @@ const assert = require("assert");
 const fse = require('fs-extra');
 
 const argv = require('minimist')(process.argv.slice(2));
+argv.config = path.join(__dirname, 'config.js');
+
 const utils = require('../lib/utils');
 
 const build = require('../cli/build');
@@ -16,11 +18,11 @@ function readFile(filename) {
 
 describe('lib/banner', function () {
     argv.production = true;
-    let settings = require('../default')(argv, __dirname);
+    let settings = require('../default')(argv);
     settings.banner = '/*banner you want*/';
 
     before((done) => build(settings, null, done));
-    after(() => fse.removeSync('test/build'));
+    after(() => fse.removeSync('build'));
 
     let sourceDir = path.join(settings._DEST_ROOT, settings.component.dir);
 

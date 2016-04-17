@@ -50,6 +50,7 @@ options:
   --debug       - build uncompressed js file
   --force       - deploy file with no cache
   --currdir     - generate demo project file to current directory
+  --config      - specified config file path
 ```
 
 ## Bundled with npm scripts

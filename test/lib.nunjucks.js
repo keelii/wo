@@ -5,9 +5,10 @@ const assert = require("assert");
 const fse = require('fs-extra');
 
 const argv = require('minimist')(process.argv.slice(2));
-const utils = require('../lib/utils');
+argv.config = path.join(__dirname, 'config.js');
 
 const build = require('../cli/build');
+const utils = require('../lib/utils');
 
 function readFile(filename) {
     let content = fs.readFileSync(filename, 'utf8');
@@ -16,12 +17,12 @@ function readFile(filename) {
 
 describe('lib/nunjucks', function () {
     argv.production = true;
-    let settings = require('../default')(argv, __dirname);
+    argv.nunjucks = true;
 
-    settings._arg.nunjucks = true;
+    let settings = require('../default')(argv);
 
-    before((done) => build(settings, 'test/app/views/*.html', done));
-    after(() => fse.removeSync('test/build'));
+    before((done) => build(settings, 'app/views/*.html', done));
+    after(() => fse.removeSync('build'));
 
     function trimAll(str) {
         return str.replace(/\s+/g, '');

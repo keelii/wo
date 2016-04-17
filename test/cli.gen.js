@@ -7,15 +7,19 @@ const assert = require("assert");
 const gen = require('../cli/gen');
 
 let argv = require('minimist')(process.argv.slice(2));
-let settings = require('../default')(argv, __dirname);
+argv.config = path.join(__dirname, 'config.js');
+let settings = require('../default')(argv);
 
 describe('cli/gen', function () {
     let cwd = process.cwd();
 
     after(function () {
+        settings._arg.currdir = false;
+        process.chdir(cwd);
+
         fse.removeSync('project');
         fse.removeSync('project_name');
-        fse.removeSync('test/test_bare');
+        fse.removeSync('test_bare');
     });
 
     it('should generate a new project named project.', function (done) {
@@ -41,18 +45,13 @@ describe('cli/gen', function () {
     });
 
     it('should gen a new project with bare dir', function (done) {
-        fs.mkdirSync(path.join(cwd, 'test/test_bare'));
-        process.chdir('test/test_bare');
-
-        let argv = require('minimist')(process.argv.slice(2));
-        let settings = require('../default')(argv, path.join(cwd, 'test'));
+        fs.mkdirSync('test_bare');
+        process.chdir('test_bare');
 
         settings._arg.currdir = true;
 
         gen(settings, '', function (err) {
-            assert.equal(true,
-                fs.existsSync(path.join(cwd, 'test/test_bare/config.js')));
-            process.chdir(cwd);
+            assert.equal(true, fs.existsSync('config.js'));
             done();
         });
     });

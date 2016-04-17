@@ -1,17 +1,20 @@
 'use strict';
+const path = require("path");
 const assert = require("assert");
 
 const release = require('../cli/release');
 
+const argv = require('minimist')(process.argv.slice(2));
+argv.config = path.join(__dirname, 'config.js');
+
 describe('cli/release - ok', function () {
-    const argv = require('minimist')(process.argv.slice(2));
-    let settings = require('../default')(argv, __dirname);
+    let settings = require('../default')(argv);
 
     it('should get directory list', function (done) {
         release(settings, function (err, result) {
             let files = result.split(/\s/);
 
-            assert.equal(true, files.indexOf('index.js') > -1);
+            assert.equal(true, files.indexOf('config.js') > -1);
             done();
         });
     });
@@ -25,8 +28,7 @@ describe('cli/release - ok', function () {
     });
 });
 describe('cli/release - error', function () {
-    const argv = require('minimist')(process.argv.slice(2));
-    let settings = require('../default')(argv, __dirname);
+    let settings = require('../default')(argv);
 
     settings.release.cmds = ['not_found_command'];
 

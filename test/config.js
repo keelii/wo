@@ -12,16 +12,16 @@ module.exports = {
     production: '//your.domain.com/cdn-path/',
 
     banner: '',
-    scripts: ['test/app/components/**/*.js'],
-    styles: ['test/app/components/**/*.scss'],
-    images: ['test/app/components/**/i/*.+(|jpg|png|gif)'],
-    templates: ['test/app/views/*.html'],
+    scripts: ['app/components/**/*.js'],
+    styles: ['app/components/**/*.scss'],
+    images: ['app/components/**/i/*.+(|jpg|png|gif)'],
+    templates: ['app/views/*.html'],
     sprites: {
         cssName: '__sprite.scss',
         imgName: 'i/__sprite.png',
         items: [
-            'test/app/components/main/**/sprite-*.png',
-            'test/app/components/footer/**/sprite-*.png'
+            'app/components/main/**/sprite-*.png',
+            'app/components/footer/**/sprite-*.png'
         ]
     },
 
@@ -43,11 +43,11 @@ module.exports = {
         config: 'config.js',
         test: '.test.html'
     },
-    templateRefs:  ['test/app/components/*/*.html', 'test/app/views/*/*.html'],
+    templateRefs:  ['app/components/*/*.html', 'app/views/*/*.html'],
 
-    tests: ['test/app/tests/**'],
-    assets: ['test/app/components/**/*.cur'],
-    globalIgnore: ['!test/app/components/*/config.js'],
+    tests: ['app/tests/**'],
+    assets: ['app/components/**/*.cur'],
+    globalIgnore: ['!app/components/*/config.js'],
     watchIgnore: /\/maco\/|\/layout\/|config\.js|node_modules/,
 
     dest: 'build',

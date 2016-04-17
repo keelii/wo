@@ -34,6 +34,7 @@ options:
   --debug       ${chalk.gray('- build uncompressed js file')}
   --force       ${chalk.gray('- deploy file with no cache')}
   --currdir     ${chalk.gray('- generate demo project file to current directory')}
+  --config      ${chalk.gray('- specified config file path')}
 `;
 
 const logo = `

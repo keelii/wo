@@ -5,6 +5,7 @@ const assert = require("assert");
 const fse = require('fs-extra');
 
 const argv = require('minimist')(process.argv.slice(2));
+argv.config = path.join(__dirname, 'config.js');
 
 const build = require('../cli/build');
 
@@ -16,10 +17,10 @@ function readFile(filename) {
 describe('lib/cleanCSS', function () {
     argv.development = false;
     argv.production = true;
-    let settings = require('../default')(argv, __dirname);
+    let settings = require('../default')(argv);
 
     before((done) => build(settings, null, done));
-    after(() => fse.removeSync('test/build'));
+    after(() => fse.removeSync('build'));
 
     let sourceDir = path.join(settings._DEST_ROOT, settings.component.dir);
 

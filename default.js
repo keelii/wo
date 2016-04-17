@@ -79,12 +79,20 @@ const defaults = {
     }
 };
 
-function addRuntimeVal(arg, configPath) {
-    configPath = configPath || process.cwd();
+function addRuntimeVal(arg) {
+    let cwd = process.cwd();
+    let configFile = path.join(cwd, 'config.js');
+
+    if (arg.config) {
+        configFile = path.resolve(arg.config);
+        cwd = path.dirname(configFile);
+        process.chdir(cwd);
+    }
+
     let config = {};
 
     try {
-        config = require(path.join(configPath, 'config.js'));
+        config = require(configFile);
     } catch (err) {
         if (cmdMap[arg._[0]] != 'gen') {
             let msg = 'Config file not found. Make sure your cwd has [config.js].';
@@ -97,9 +105,8 @@ function addRuntimeVal(arg, configPath) {
 
     options._arg = arg;
     options._cmd = arg._[0];
-    options._CWD = configPath || process.cwd();
+    options._CWD = cwd;
     options._VERSION = arg.ver || options.version;
-    options._MSG = arg.m || '';
     options._SOURCE_ROOT = path.join(options._CWD, options.source);
     options._COMPONENT_ROOT = path.join(options._SOURCE_ROOT, options.component.dir);
     options._VIEW_ROOT = path.join(options._SOURCE_ROOT, options.view);
@@ -129,11 +136,10 @@ function addRuntimeVal(arg, configPath) {
     if (options._isPrd) {
         options._DEST_ROOT = path.join(options._CWD, options.dest, options._PRD_PREFIX);
     }
-    //if (options._isRel) {
-    //    options._DEST_ROOT = path.join(options._CWD, options.release.dest, options._PRD_PREFIX);
-    //}
+
     // component data
     options._components = {};
+    // sass includes reference
     options._sass = {};
 
     return _.defaultsDeep({}, options);

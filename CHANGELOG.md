@@ -1,5 +1,16 @@
 ## Change Log
 
+### v0.0.29 (2016/04/16 14:42 +00:00)
+- [fe2841f](https://github.com/keelii/wo/commit/fe2841f65d89a75b8cfc06eb5f9348ee801f0c48) 1. 更改了模板渲染路径 (@keelii)
+- [b7f5a19](https://github.com/keelii/wo/commit/b7f5a1941c634f2dce36f735ba4df38fff5123d5) fix test case (@keelii)
+- [7360186](https://github.com/keelii/wo/commit/73601869bde561a5004cf3cb89a628b7be987cf8) Merge branch 'master' of github.com:keelii/wo (@keelii)
+- [0d4cdb5](https://github.com/keelii/wo/commit/0d4cdb5c1e929fd3bd0c9ab46e865e582f3b7f80) var => let (@keelii)
+- [380bee8](https://github.com/keelii/wo/commit/380bee8e48559ba52d66a75198358d503b2cfc71) wo build component_name1,component_name2 (@keelii)
+
+### v0.0.28 (2016/04/13 10:10 +00:00)
+- [fad4571](https://github.com/keelii/wo/commit/fad4571786084b45dbfa1c3e45b04cf5012d68a2) Merge branch 'master' of github.com:keelii/wo (@keelii)
+- [85fcec2](https://github.com/keelii/wo/commit/85fcec2dcad2a9c9798c7925b930b93ef021e0e4) npm publish 0.0.27 (@keelii)
+
 ### v0.0.27 (2016/04/12 13:33 +00:00)
 - [83a311b](https://github.com/keelii/wo/commit/83a311bd2b89d37217388791ed0c77621b594d54) npm publish 0.0.27 (@keelii)
 - [da7468d](https://github.com/keelii/wo/commit/da7468dc5d640ad4a3f383f90195527b34af5fd6) use => (@keelii)

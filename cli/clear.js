@@ -5,7 +5,7 @@ module.exports = function (config, callback) {
     callback = callback || function() {};
 
     async.each([
-        config.dest,
+        config._DEST_ROOT,
         config._SERVER_ROOT
     ], fse.remove, function (err) {
         if (err) {

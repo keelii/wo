@@ -7,8 +7,10 @@ const path = require("path");
 const assert = require("assert");
 
 const argv = require('minimist')(process.argv.slice(2));
+argv.config = path.join(__dirname, 'config.js');
 argv.development = true;
-const settings = require('../default')(argv, __dirname, true);
+
+const settings = require('../default')(argv);
 const start = require('../cli/start');
 
 function trimAll(str) {
@@ -17,17 +19,21 @@ function trimAll(str) {
 
 describe('cli/start - exception', function() {
     it('should return not validate input', function (done) {
-        start(settings, 'test/app/components/main/not.validate.file', function (err) {
+        start(settings, 'app/components/main/not.validate.file', function (err) {
             assert.equal(err, 'input not validated');
             done();
         });
     });
 
-    after(() => fse.removeSync('test/.www'));
+    after(() => fse.removeSync('.www'));
 });
 
 describe('cli/start', function() {
-    before((done) => start(settings, null, () => setTimeout(done, 500)));
+    before((done) => start(settings, null, function() {
+        setTimeout(function() {
+            done();
+        }, 500)
+    }));
     afterEach(function () {
         fs.writeFileSync(jsSourceFile, jsContent, 'utf8');
         fs.writeFileSync(cssSourceFile, cssContent, 'utf8');
@@ -35,7 +41,7 @@ describe('cli/start', function() {
         fs.writeFileSync(macoSourceFile, macoContent, 'utf8');
         fs.writeFileSync(mixinSourceFile, mixinContent, 'utf8');
     });
-    after(() => fse.removeSync('test/build'));
+    after(() => fse.removeSync('.www'));
 
     let jsSourceFile = path.join(settings._COMPONENT_ROOT, 'main/main.js');
     let jsDestFile = path.join(settings._DEST_ROOT, 'components/main/main.js');
