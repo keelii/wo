@@ -1,5 +1,9 @@
 ## Change Log
 
+### v0.0.31 (2016/04/26 01:26 +00:00)
+- [60da9e9](https://github.com/keelii/wo/commit/60da9e963e2f8b7e0e0f169ff64c97584135cde6) fix rebasePath repace about:blank url (@keelii)
+- [4a0853d](https://github.com/keelii/wo/commit/4a0853ddc1e3b3e63476452cf7622e2847b1d44b) add --config option to specified config file path (@keelii)
+
 ### v0.0.29 (2016/04/16 14:42 +00:00)
 - [fe2841f](https://github.com/keelii/wo/commit/fe2841f65d89a75b8cfc06eb5f9348ee801f0c48) 1. 更改了模板渲染路径 (@keelii)
 - [b7f5a19](https://github.com/keelii/wo/commit/b7f5a1941c634f2dce36f735ba4df38fff5123d5) fix test case (@keelii)
