@@ -27,6 +27,7 @@ function getSources (config, input) {
     }
 
     if (input) {
+
         if (utils.isDir(input)) {
             targets = path.join(input, '/**');
             files = getGlobFiles(targets, config);
