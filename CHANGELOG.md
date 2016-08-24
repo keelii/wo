@@ -1,5 +1,9 @@
 ## Change Log
 
+### upcoming (2016/08/24 09:46 +00:00)
+- [0aaa723](https://github.com/keelii/wo/commit/0aaa723286fc872f448569554c41680a0ad89fa4) update chokidar,lodash,clean-css,uglify-js (@keelii)
+- [a9443cc](https://github.com/keelii/wo/commit/a9443cc1720489cb723cd595448445355b6c7414) fix rebasePath repace about:blank url (@keelii)
+
 ### v0.0.31 (2016/04/26 01:26 +00:00)
 - [60da9e9](https://github.com/keelii/wo/commit/60da9e963e2f8b7e0e0f169ff64c97584135cde6) fix rebasePath repace about:blank url (@keelii)
 - [4a0853d](https://github.com/keelii/wo/commit/4a0853ddc1e3b3e63476452cf7622e2847b1d44b) add --config option to specified config file path (@keelii)
