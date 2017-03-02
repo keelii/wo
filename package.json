@@ -41,7 +41,7 @@
     "nunjucks": "^2.4.2",
     "spritesmith": "^3.1.0",
     "static-http-server": "0.0.5",
-    "uglify-js": "^2.7.3",
+    "uglify-js": "^2.6.2",
     "vinyl-fs": "^2.4.3",
     "vinyl-ftp": "^0.5.0"
   },
