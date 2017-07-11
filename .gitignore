@@ -18,3 +18,4 @@ typings
 build
 .www
 publish.bat
+yarn-error.log
