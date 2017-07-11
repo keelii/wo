@@ -50,7 +50,6 @@ if (argv.h) {
 if (argv.v) {
     return console.log(pkg.version);
 }
-
 if (cmd) {
     const settings = require('./default')(argv);
     const command = utils.cmdMap[cmd];
