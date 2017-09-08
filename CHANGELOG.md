@@ -1,6 +1,11 @@
 ## Change Log
 
-### upcoming (2016/08/24 09:46 +00:00)
+### upcoming (2017/09/08 10:02 +00:00)
+- [77debfd](https://github.com/keelii/wo/commit/77debfddffe13b03d0e83b59b3264c362cd5a80c) dos2unix (@keelii)
+- [daeebee](https://github.com/keelii/wo/commit/daeebee90c2fac960b8a61d394ed1c655c8b5946) remove log (@keelii)
+- [b041866](https://github.com/keelii/wo/commit/b04186690c63b559ba4e772d2183c3937abd9dbf) dos2uninx. (@keelii)
+- [d12180f](https://github.com/keelii/wo/commit/d12180f1850db943887b2adc0c3a5314a6f56d6d) revert uglify (@keelii)
+- [4abc87a](https://github.com/keelii/wo/commit/4abc87ae8e1e058f973ae9156341a9a69b45be2d) update some packages (@keelii)
 - [0aaa723](https://github.com/keelii/wo/commit/0aaa723286fc872f448569554c41680a0ad89fa4) update chokidar,lodash,clean-css,uglify-js (@keelii)
 - [a9443cc](https://github.com/keelii/wo/commit/a9443cc1720489cb723cd595448445355b6c7414) fix rebasePath repace about:blank url (@keelii)
 
