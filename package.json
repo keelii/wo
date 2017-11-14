@@ -1,6 +1,6 @@
 {
   "name": "wooo",
-  "version": "0.0.35",
+  "version": "0.1.0",
   "author": "keelii <keeliizhou@gmail.com>",
   "description": "FE Build tool with easy cli.",
   "license": "MIT",
@@ -37,7 +37,7 @@
     "lodash": "^4.15.0",
     "map-stream": "0.0.6",
     "minimist": "^1.2.0",
-    "node-sass": "^3.8.0",
+    "node-sass": "^4.6.1",
     "nunjucks": "^2.4.2",
     "spritesmith": "^3.1.0",
     "static-http-server": "0.0.5",
