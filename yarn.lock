@@ -1390,6 +1390,10 @@ he@1.1.1:
   version "1.1.1"
   resolved "http://registry.npm.taobao.org/he/download/he-1.1.1.tgz#93410fd21b009735151f8868c2f271f3427e23fd"
 
+highlight.js@^9.12.0:
+  version "9.12.0"
+  resolved "http://registry.npm.taobao.org/highlight.js/download/highlight.js-9.12.0.tgz#e6d9dbe57cbefe60751f02af336195870c90c01e"
+
 hoek@2.x.x:
   version "2.16.3"
   resolved "http://registry.npm.taobao.org/hoek/download/hoek-2.16.3.tgz#20bb7403d3cea398e91dc4710a8ff1b8274a25ed"
@@ -1958,6 +1962,10 @@ map-stream@0.0.6:
   version "0.0.6"
   resolved "http://registry.npm.taobao.org/map-stream/download/map-stream-0.0.6.tgz#d2ef4eb811a28644c7a8989985c69c2fdd496827"
 
+marked@^0.3.17:
+  version "0.3.17"
+  resolved "http://registry.npm.taobao.org/marked/download/marked-0.3.17.tgz#607f06668b3c6b1246b28f13da76116ac1aa2d2b"
+
 meow@^3.1.0, meow@^3.3.0, meow@^3.5.0, meow@^3.7.0:
   version "3.7.0"
   resolved "http://registry.npm.taobao.org/meow/download/meow-3.7.0.tgz#72cb668b425228290abbfa856892587308a801fb"
@@ -2204,6 +2212,10 @@ normalize-path@^2.0.0, normalize-path@^2.0.1:
 number-is-nan@^1.0.0:
   version "1.0.1"
   resolved "http://registry.npm.taobao.org/number-is-nan/download/number-is-nan-1.0.1.tgz#097b602b53422a522c1afb8790318336941a011d"
+
+nunjucks-markdown@^2.0.1:
+  version "2.0.1"
+  resolved "http://registry.npm.taobao.org/nunjucks-markdown/download/nunjucks-markdown-2.0.1.tgz#d55e75433a35850e2c345651fe3f931ed9b156a2"
 
 nunjucks@^2.4.2:
   version "2.5.2"
