@@ -262,8 +262,8 @@ describe('cli/build #getGlobFiles', function () {
     });
     it('should get mulit file with glob pattern', function () {
         assert.deepEqual(
-            ['config.js', 'cli.build.js'],
-            build.getGlobFiles(['config.js', 'cli.build.js'], settings)
+            ['config.js', 'build.js'],
+            build.getGlobFiles(['config.js', 'build.js'], settings)
         );
     });
     it('should get mulit file with glob pattern', function () {

@@ -71,7 +71,7 @@ describe('lib/utils - file dir or path', function () {
     });
 
     it('should return filename', function () {
-        assert.equal(path.normalize('lib.utils.js'), utils.relativeDir(__filename));
+        assert.equal(path.normalize('utils.js'), utils.relativeDir(__filename));
     });
 
     it('should not a file', function () {
