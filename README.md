@@ -16,7 +16,7 @@ A FE Build tool with easy cli.
 
 ## Requirement
 
-> "node" : ">=4.0.0"
+> "node" : ">=8.0.0"
 
 ## Install globally
 

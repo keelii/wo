@@ -1,6 +1,16 @@
 ## Change Log
 
-### upcoming (2017/09/08 10:02 +00:00)
+### upcoming (2018/09/14 06:01 +00:00)
+- [18d24b0](https://github.com/keelii/wo/commit/18d24b0871c82f5506bdfbd3e92f901317ac3e92) Important notice(upgrade to 1.x) : (@keelii)
+- [ba68ac5](https://github.com/keelii/wo/commit/ba68ac59f5406bdda0a54c4d884e33168fc58de4) bugfix: CSS 中绝对路径替换问题 (@keelii)
+
+### v0.1.0 (2017/11/14 09:59 +00:00)
+- [95b5575](https://github.com/keelii/wo/commit/95b5575fbb577678d2109b2ebc1d14c638f8a5c6) update node-sass, be careful to update. (@keelii)
+
+### v0.0.35 (2017/10/10 06:36 +00:00)
+- [aeebce5](https://github.com/keelii/wo/commit/aeebce5d41420f2702094d3bb52b3ccce11d2c8f) 添加模板全局变量 isPrd/isDev (@keelii)
+- [08885d8](https://github.com/keelii/wo/commit/08885d863c4034d13130c0bf1d1a4541198a28ca) Merge branch 'master' of github.com:keelii/wo (@keelii)
+- [3ab796c](https://github.com/keelii/wo/commit/3ab796ceb18e1897882f006245b417dbe7446e61) dos2unix (@keelii)
 - [77debfd](https://github.com/keelii/wo/commit/77debfddffe13b03d0e83b59b3264c362cd5a80c) dos2unix (@keelii)
 - [daeebee](https://github.com/keelii/wo/commit/daeebee90c2fac960b8a61d394ed1c655c8b5946) remove log (@keelii)
 - [b041866](https://github.com/keelii/wo/commit/b04186690c63b559ba4e772d2183c3937abd9dbf) dos2uninx. (@keelii)
